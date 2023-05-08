@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl:'https://localhost:7187/api'
+  apiUrl:'https://localhost:8082/api'
 
   //IIS EXPRESS
   // apiUrl:'https://localhost:44362/api' 
