@@ -20,9 +20,9 @@
                 
                 <div class="col-sm-8">
                     <input type="text" name="loginName" class="form-control" id="loginName" formControlName="loginName"
-                        placeholder="Enter User Name" required>
+                        placeholder="Enter EmailId" required>
                     <div *ngIf="(f.loginName.touched) && f.loginName.invalid" class="text-danger">
-                        <div *ngIf="f.loginName.errors.required"><small>*User Name is required</small></div>
+                        <div *ngIf="f.loginName.errors.required"><small>*EmailId is required</small></div>
                     </div>
                 </div>
             </div>
