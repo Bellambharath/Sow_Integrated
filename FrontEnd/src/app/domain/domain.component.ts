@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomainService } from '../services/domain.service';
 import { ExcelService } from '../services/excel.service';
@@ -31,13 +31,26 @@ export class DomainComponent implements OnInit {
   nextInterval: any;
   previousInterval: any;
 
-  constructor(private service: DomainService, private excelService: ExcelService, private loginservice: LoginService) {
+  constructor(private service: DomainService, private excelService: ExcelService,
+    private loginservice: LoginService, private elementRef: ElementRef) {
     //this.isAuthor = this.loginservice.isAuthor;
   }
 
   ngOnInit(): void {
     this.isAuthor = JSON.parse(sessionStorage.getItem('author'));
     this.GetAllDomainData();
+  }
+
+  callClose() {
+
+    const closeElement: HTMLElement = this.elementRef.nativeElement.querySelector('#close');
+
+    if (closeElement) {
+
+      closeElement.click();
+
+    }
+
   }
 
   get f() { return this.domainForm.controls; }
@@ -64,6 +77,7 @@ export class DomainComponent implements OnInit {
     this.submitted = true;
 
     if (this.domainForm.invalid) {
+      this.markAllFieldsAsTouched();
       return;
     }
 
@@ -77,6 +91,17 @@ export class DomainComponent implements OnInit {
         this.onAdd();
       }
     }
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    const control = this.domainForm.get(fieldName);
+    return control.invalid && (control.touched || this.submitted);
+  }
+
+  markAllFieldsAsTouched() {
+    Object.keys(this.domainForm.controls).forEach(fieldName => {
+      this.domainForm.controls[fieldName].markAsTouched();
+    });
   }
 
   isDuplicate(isEdit: boolean) {
@@ -110,13 +135,18 @@ export class DomainComponent implements OnInit {
       alert('Data updated successfully');
       this.domainForm.reset();
       this.GetAllDomainData();
+      this.callClose();
       this.editmode = false;
       this.Id = null;
     }, err => {
       ;
+
       this.editmode = false;
+
       this.Id = null
+
     })
+
   }
 
   onAdd() {
@@ -178,6 +208,15 @@ export class DomainComponent implements OnInit {
   //   alert('Domain with domainId ' +this.Id+ ' Not Deleted')
   //  }
   //}
+
+  resetForm() {
+    this.domainForm.reset();
+
+  }
+  UpdateHeader() {
+    this.domainForm.reset();
+    this.editmode = false;
+  }
   OnNextHeld() {
     this.nextInterval = setInterval(() => {
       if (this.currentPage < this.totalPages) {
@@ -187,11 +226,11 @@ export class DomainComponent implements OnInit {
       }
     }, 200);
   }
-  
+
   OnNextReleased() {
     clearInterval(this.nextInterval);
   }
-  
+
   OnPreviousHeld() {
     this.previousInterval = setInterval(() => {
       if (this.currentPage > 1) {
@@ -201,7 +240,7 @@ export class DomainComponent implements OnInit {
       }
     }, 200);
   }
-  
+
   OnPreviousReleased() {
     clearInterval(this.previousInterval);
   }

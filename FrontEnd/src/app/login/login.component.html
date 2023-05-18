@@ -45,7 +45,8 @@
                 <button type="submit"  class="btn btn-succes">Submit</button>
                </div>  
             </div>
-            <p *ngIf="errorMessage" class="moving-text">{{ errorMessage }}</p>
+            
+            <p *ngIf="errorMessage" class="alert alert-warning moving-text text-center p-0">{{ errorMessage }}</p>
         </form>
     </div>
 </div>

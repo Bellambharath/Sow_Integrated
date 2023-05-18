@@ -1,19 +1,18 @@
-<h2>Welcome {{Username}}!</h2>
-<div class="container">
+<div class="container mt-5">
     <div class="row">
         <div class="col-12">
-            <div class="card card-default shadow rounded">
+            <div class="card card-default shadow rounded ">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <ul class="nav nav-tabs">
+                            <ul class="nav nav-tabs" style="color:rgba(20, 5, 5, 0.61)">
                                 <li class="nav-item">
                                     <a class="nav-link" [class.active]="activeTab == 'SO'"
-                                        (click)="onTabClick('SO')">SO</a>
+                                        (click)="onTabClick('SO')"><b>SO</b></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" [class.active]="activeTab == 'Candidates'"
-                                        (click)="onTabClick('Candidates')">Candidates</a>
+                                        (click)="onTabClick('Candidates')"><b>Candidates</b></a>
                                 </li>
                             </ul>
                             <div class="tab-content mt-3">
@@ -31,11 +30,13 @@
                                     <div class="cards_wrap ">
                                         <div class="card_item">
                                             <div class="card-header">
-                                                <small class="text-muted">So Status</small>
+                                                <small class="text">So Status</small>
                                             </div>
-                                            <div class="card_inner">
-                                                <ul *ngFor="let status of statuses" class="list-group list-group-flush">
-                                                    <li class="list-group-item">
+                                            <div class="card_inner alt">
+                                                <ul *ngFor="let status of statuses;let i = index"
+                                                    class="list-group list-group-flush">
+                                                    <li class="list-group-item"
+                                                        [ngClass]="{ 'alternate-color': i % 2 == 0 }">
                                                         <div class="card-content">
                                                             <label>{{status.name}}</label>
                                                             <span class="float-right">{{status.count}}</span>
@@ -46,12 +47,13 @@
                                         </div>
                                         <div class="card_item">
                                             <div class="card-header">
-                                                <small class="text-muted">Technology</small>
+                                                <small class="text">Technology</small>
                                             </div>
                                             <div class="card_inner">
-                                                <ul *ngFor="let technology of technologies"
+                                                <ul *ngFor="let technology of technologies;let i = index"
                                                     class="list-group list-group-flush">
-                                                    <li class="list-group-item">
+                                                    <li class="list-group-item"
+                                                        [ngClass]="{ 'alternate-color': i % 2 == 0 }">
                                                         <div class="card-content">
                                                             <label
                                                                 style="overflow-wrap: break-word;">{{technology.name}}</label>
@@ -63,11 +65,13 @@
                                         </div>
                                         <div class="card_item">
                                             <div class="card-header">
-                                                <small class="text-muted">Region</small>
+                                                <small class="text">Region</small>
                                             </div>
                                             <div class="card_inner">
-                                                <ul *ngFor="let region of regions" class="list-group list-group-flush">
-                                                    <li class="list-group-item">
+                                                <ul *ngFor="let region of regions;let i = index"
+                                                    class="list-group list-group-flush">
+                                                    <li class="list-group-item"
+                                                        [ngClass]="{ 'alternate-color': i % 2 == 0 }">
                                                         <div class="card-content">
                                                             <label>{{region.name}}</label>
                                                             <span class="float-right">{{region.count}}</span>
@@ -109,7 +113,8 @@
                                                     <small class="text-muted">Location</small>
                                                 </div>
                                                 <div class="card_inner">
-                                                    <ul class="list-group list-group-flush" *ngFor="let loc of location">
+                                                    <ul class="list-group list-group-flush"
+                                                        *ngFor="let loc of location">
                                                         <label>{{loc.name}} </label>
                                                         <span class="float-right">: {{loc.count}} </span>
                                                     </ul>

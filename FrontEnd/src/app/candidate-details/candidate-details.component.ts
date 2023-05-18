@@ -274,7 +274,7 @@ export class CandidateDetailsComponent implements OnInit {
           .DeleteCandidateData(candidate.candidateId)
           .subscribe((res) => {
             alert(
-              "Candidate with CandidateId " + this.Id + "Deleted Successfully"
+              res
             );
             this.GetCandidateData();
             this.Id = null;
@@ -313,8 +313,9 @@ export class CandidateDetailsComponent implements OnInit {
     this.service
       .GetCandidateByDate(this.fromDate, this.endDate)
       .subscribe((data) => {
-        if (data != null || data != undefined) {
-          console.log(data);
+        if (data != null || data != undefined ) 
+        {
+          console.log(data.length);
           this.downloadObject = this.createObject(data);
           let headers = [
             [
@@ -338,7 +339,8 @@ export class CandidateDetailsComponent implements OnInit {
             "Candidate Details",
             headers
           );
-        } else alert("No Records found!");
+        } 
+        else alert("No Records found!");
       });
   }
 

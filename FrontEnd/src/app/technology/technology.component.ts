@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TechnologyModel } from '../Models/TechnologyModel';
 import { DomainService } from '../services/domain.service';
@@ -37,7 +37,8 @@ export class TechnologyComponent implements OnInit {
   maxCountError:string;
   minCountError:string;
 
-  constructor(private service: TechnologyService, private domainService: DomainService, private excelService: ExcelService, private login: LoginService) {
+  constructor(private service: TechnologyService, private domainService: DomainService, 
+    private excelService: ExcelService, private login: LoginService,private elementRef: ElementRef) {
   }
 
   async ngOnInit() {
@@ -80,6 +81,7 @@ export class TechnologyComponent implements OnInit {
     this.submitted = true;
 
     if (this.techForm.invalid) {
+      this.markAllFieldsAsTouched();
       return;
     }
 
@@ -93,6 +95,27 @@ export class TechnologyComponent implements OnInit {
         this.onAdd();
       }
     }
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    const control = this.techForm.get(fieldName);
+    return control.invalid && (control.touched || this.submitted);
+  }
+  
+  markAllFieldsAsTouched() {
+    Object.keys(this.techForm.controls).forEach(fieldName => {
+      this.techForm.controls[fieldName].markAsTouched();
+    });
+  }
+ 
+  resetForm(){
+    this.techForm.reset();
+  }
+  UpdateHeader()
+  {
+    this.techForm.reset();
+    this.editmode = false;
+    this.populateDropdowns();
   }
 
   OnNextHeld() {
@@ -149,6 +172,15 @@ export class TechnologyComponent implements OnInit {
     }
     return false;
   }
+  callClose() {
+    const closeElement: HTMLElement = this.elementRef.nativeElement.querySelector('#close');
+    if (closeElement) {
+
+      closeElement.click();
+
+    }
+
+  }
 
   onEdit() {
     let formValue = this.techForm.value;
@@ -164,6 +196,7 @@ export class TechnologyComponent implements OnInit {
       this.GetAllTechData();
       this.editmode = false;
       this.Id = null;
+      this.callClose();
     }, err => {
       console.log(err);
       this.editmode = false;

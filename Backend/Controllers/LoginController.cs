@@ -28,31 +28,25 @@ namespace CandidateSoW.Controllers
                 string msg = string.Empty;
                 LoginModel ln = new LoginModel();
                 DataSet ds = dop.loginget(EmailId, LoginPassword);
-                if (ds != null)
+
+                if (ds.Tables[0].Rows.Count>0)
                 {
-                    if (ds.Tables[0].Rows[0] != null)
-                    {
-                        ln.LoginName = ds.Tables[0].Rows[0]["LoginName"].ToString();
-                        ln.EmailId = ds.Tables[0].Rows[0]["EmailId"].ToString();
-                        ln.RoleName = ds.Tables[0].Rows[0]["RoleName"].ToString();
-                        ln.ScreenNames = ds.Tables[0].Rows[0]["ScreenNames"].ToString();
-                        ln.Status = ds.Tables[0].Rows[0]["Status"].ToString();
-                        ln.PermissionName = ds.Tables[0].Rows[0]["PermissionName"].ToString();
-                        ln.FailureAttempts = (int)ds.Tables[0].Rows[0]["FailureAttempts"];
-                        ln.Islock = (bool)ds.Tables[0].Rows[0]["Islock"];
-                        return JsonConvert.SerializeObject(ln);
-                    }
-                    else
-                    {
-                        msg = "error";
-                        return msg;
-                    }
+                    ln.LoginName = ds.Tables[0].Rows[0]["LoginName"].ToString();
+                    ln.EmailId = ds.Tables[0].Rows[0]["EmailId"].ToString();
+                    ln.RoleName = ds.Tables[0].Rows[0]["RoleName"].ToString();
+                    ln.ScreenNames = ds.Tables[0].Rows[0]["ScreenNames"].ToString();
+                    ln.Status = ds.Tables[0].Rows[0]["Status"].ToString();
+                    ln.PermissionName = ds.Tables[0].Rows[0]["PermissionName"].ToString();
+                    ln.FailureAttempts = (int)ds.Tables[0].Rows[0]["FailureAttempts"];
+                    ln.Islock = (bool)ds.Tables[0].Rows[0]["Islock"];
+                    return JsonConvert.SerializeObject(ln);
                 }
                 else
                 {
                     msg = "error";
                     return msg;
                 }
+
             }
             catch (Exception E)
             {
@@ -75,6 +69,6 @@ namespace CandidateSoW.Controllers
             }
         }
 
-    }                                                                                                                                  
+    }
 
 }

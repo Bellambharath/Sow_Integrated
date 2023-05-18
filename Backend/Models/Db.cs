@@ -16,11 +16,21 @@ namespace CandidateSoW.Models
     {
 
         private string connstr ;
+        //private readonly ILogger _logger;
 
         public Db(string dbConn)
         {
             connstr = dbConn;
+            
         }
+        //public Db(ILogger logger)
+        //{
+        //    _logger = logger;
+        //}
+       
+
+       
+
 
         public string sowtable(Sow sp)
         {
@@ -53,9 +63,15 @@ namespace CandidateSoW.Models
                 cmd.Parameters.AddWithValue("@InternalResource", sp.InternalResource);
                 cmd.Parameters.AddWithValue("@Type", sp.Type);
                 con.Open();
-                cmd.ExecuteNonQuery();
+                
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    msg = rdr["status"].ToString();
+                }
+                
                 con.Close();
-                msg = "Success";
+               
 
             }
             catch (Exception ex)
@@ -70,11 +86,11 @@ namespace CandidateSoW.Models
                 }
 
             }
-            return msg;
+            return JsonConvert.SerializeObject(msg);
         }
         public string imp_candidateData(string jsonData)
         {
-            
+
             using (SqlConnection conn = new SqlConnection(connstr))
             {
                 string msg = string.Empty;
@@ -83,43 +99,13 @@ namespace CandidateSoW.Models
                     SqlCommand cmd = new SqlCommand("usp_candidateDataImport", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@json", jsonData);
+
                     conn.Open();
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                    msg = "Candidate Details Added Successfully";
-                   
-                }
-                catch (Exception ex)
-                {
-                    
-                    msg= ex.Message;
-                }
-                finally
-                {
-                    if (conn.State == ConnectionState.Open)
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
                     {
-                        conn.Close();
+                        msg = rdr["status"].ToString();
                     }
-
-                }
-                return JsonConvert.SerializeObject(msg);
-            }
-        }
-        public string imp_sowData(string jsonData)
-        {
-
-            using (SqlConnection conn = new SqlConnection(connstr))
-            {
-                string msg = string.Empty;
-                try
-                {
-                    SqlCommand cmd = new SqlCommand("usp_sowDataImport", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@json", jsonData);
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                    msg = "SO Details Added Successfully";
                 }
                 catch (Exception ex)
                 {
@@ -132,7 +118,39 @@ namespace CandidateSoW.Models
                         conn.Close();
                     }
 
+                }
+                return JsonConvert.SerializeObject(msg);
+            }
+        }
 
+        public string imp_sowData(string jsonData)
+        {
+
+            using (SqlConnection conn = new SqlConnection(connstr))
+            {
+                string msg = string.Empty;
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("usp_sowDataImport", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@json", jsonData);
+                    conn.Open();
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        msg = rdr["status"].ToString();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    msg = ex.Message;
+                }
+                finally
+                {
+                    if (conn.State == ConnectionState.Open)
+                    {
+                        conn.Close();
+                    }
 
                 }
                 return JsonConvert.SerializeObject(msg);
@@ -296,9 +314,11 @@ namespace CandidateSoW.Models
                     cmd.Parameters.AddWithValue("@Status", candidate.Status);
                     cmd.Parameters.AddWithValue("@Gender", candidate.Gender);
                     conn.Open();
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                    msg = "Success";
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        msg = rdr["status"].ToString();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -312,7 +332,7 @@ namespace CandidateSoW.Models
                     }
 
                 }
-                return msg;
+                return JsonConvert.SerializeObject(msg);
             }
         }
         public string updateCandidateTable(int id, CandidateModel candidate)
@@ -359,18 +379,24 @@ namespace CandidateSoW.Models
         }
         public string deleteCandidateData(int id)
         {
-            using (SqlConnection conn = new SqlConnection(connstr))
+            using (SqlConnection con = new SqlConnection(connstr))
             {
                 string msg = string.Empty;
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("usp_deleteCandidateData", conn);
+                    SqlCommand cmd = new SqlCommand("usp_deleteCandidateData", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@CandidateId", id);
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                    msg = "Success";
+                    con.Open();
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        msg = rdr["status"].ToString();
+                    }
+
+                    con.Close();
+
+
                 }
                 catch (Exception ex)
                 {
@@ -378,13 +404,13 @@ namespace CandidateSoW.Models
                 }
                 finally
                 {
-                    if (conn.State == ConnectionState.Open)
+                    if (con.State == ConnectionState.Open)
                     {
-                        conn.Close();
+                        con.Close();
                     }
 
                 }
-                return msg;
+                return JsonConvert.SerializeObject(msg);
             }
         }
         public string sowcandidatetable(SoWCandidateModel sc)
@@ -1244,6 +1270,7 @@ namespace CandidateSoW.Models
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 da.Fill(ds);
                 msg = "Success";
+                
                 return ds;
             }
             catch (Exception ex)
@@ -1380,7 +1407,7 @@ namespace CandidateSoW.Models
                 cmd.Parameters.AddWithValue("@LoginId", rc.LoginId);
                 cmd.Parameters.AddWithValue("@Type", rc.Type);
                 cmd.Parameters.AddWithValue("@FailureAttempts", rc.FailureAttempts);
-                cmd.Parameters.AddWithValue("@IsLock", rc.IsLock);
+                //cmd.Parameters.AddWithValue("@IsLock", rc.IsLock);
 
                 con.Open();
                 cmd.ExecuteNonQuery();

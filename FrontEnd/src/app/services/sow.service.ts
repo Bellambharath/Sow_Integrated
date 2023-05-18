@@ -7,23 +7,22 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class SOWService {
-  apiUrl=environment.apiUrl;
-  baseUrl: string =this.apiUrl+ "/Sow";
+  apiUrl = environment.apiUrl;
+  baseUrl: string = this.apiUrl + "/Sow";
   private header = new HttpHeaders({ 'content-type': 'application/json' });
   constructor(private http: HttpClient) { }
   GetAllSowData(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}`);
   }
-  PostSOWDuplicateCheck(data:any):Observable<any>
-{
- let DATA={'SOW':data}
- console.log(DATA)
- return this.http.post<any>(`${this.baseUrl}/Sowimportdata`,DATA,{headers:this.header})
+  PostSOWDuplicateCheck(data: any): Observable<any> {
+    let DATA = { 'SOW': data }
+    console.log(DATA)
+    return this.http.post<any>(`${this.baseUrl}/Sowimportdata`, DATA, { headers: this.header })
 
-}
+  }
 
   PostSowData(data: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}`,data );
+    return this.http.post<any>(`${this.baseUrl}`, data);
   }
   DeleteSowData(id: any): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}/${id}`);
@@ -31,10 +30,10 @@ export class SOWService {
   UpdateSowData(id: any, data: any): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/${id}`, data)
   }
-  GetSowById(id:any):Observable<any>{
+  GetSowById(id: any): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/${id}`)
   }
-  GetSOByDate(startDate:any,endDate:any):Observable<any>{
+  GetSOByDate(startDate: any, endDate: any): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/GetDate?StartDate=${startDate}&EndDate=${endDate}`)
   }
 }

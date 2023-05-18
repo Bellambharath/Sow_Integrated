@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,11 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'CandidateProfiles';
   headerEvent: boolean = true;
-
+  constructor(public router: Router) {}
   update(event: any) {
     this.headerEvent = event;
   }
+
 }
 
 

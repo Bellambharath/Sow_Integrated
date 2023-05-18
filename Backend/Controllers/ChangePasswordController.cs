@@ -16,7 +16,7 @@ namespace CandidateSoW.Controllers
             configuration = iConfig;
         }
 
-        [HttpPut()]
+        [HttpPut()] 
         public String Put([FromBody] ChangePasswordModel cp)
         {
             string dbConn = configuration.GetSection("ConnectionStrings").GetSection("DbConnection").Value;

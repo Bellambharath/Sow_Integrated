@@ -42,10 +42,14 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {
     this.isAuthor = JSON.parse(sessionStorage.getItem("author"));
     console.log(this.isAuthor);
+    this.getRoles();
+    this.getLoginData();
+  }
+  getRoles()
+  {
     this.service.GetRoleData().subscribe((result) => {
       this.roleName = result;
     });
-    this.getLoginData();
   }
   getLoginData() {
     this.service.GetLoginData().subscribe(
@@ -75,58 +79,74 @@ export class RegistrationComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.regForm.invalid) {
+      this.markAllFieldsAsTouched();
       return;
     }
 
-    if (this.editMode) {
-      if (!this.isDuplicate(true)) {
+    if (this.editMode) 
+    {
+      if (!this.isDuplicate(true)) 
+      {
         this.onEdit();
       }
-    } else {
-      if (!this.isDuplicate(false)) {
+    } 
+    else 
+    {
+      if (!this.isDuplicate(false)) 
+      {
         this.onAdd();
       }
     }
   }
-  isDuplicate(isEdit: boolean) {
-    debugger;
+  isFieldInvalid(fieldName: string): boolean {
+    const control = this.regForm.get(fieldName);
+    return control.invalid && (control.touched || this.submitted);
+  }
+
+  markAllFieldsAsTouched() {
+    Object.keys(this.regForm.controls).forEach(fieldName => {
+      this.regForm.controls[fieldName].markAsTouched();
+
+    });
+
+  }
+
+  isDuplicate(isEdit: boolean) 
+  {
+    //debugger;
     let checkDuplicate = true;
     let checkDuplicateEmail = false;
     let formValue = this.regForm.value;
-    if (formValue != null) {
+    if (formValue != null) 
+    {
+      console.log(formValue)
       let userName = formValue.userName;
       let emailId = formValue.emailId;
-      if (
-        isEdit &&
-        this.prevUserName.trim().toLowerCase() === userName.trim().toLowerCase()
-      ) {
+      if (isEdit && this.prevUserName.trim().toLowerCase() === userName.trim().toLowerCase()) 
+      {
         checkDuplicate = false;
       }
-      if (
-        isEdit &&
-        this.prevEmailId.trim().toLocaleLowerCase() !=
-          emailId.trim().toLocaleLowerCase()
-      ) {
+      if (isEdit &&this.prevEmailId.trim().toLocaleLowerCase() != emailId.trim().toLocaleLowerCase()) 
+      {
         checkDuplicateEmail = true;
       }
 
-      if (checkDuplicate) {
-        var userNameExist = this.loginData.find(
-          (item) => item.loginName.toLocaleLowerCase().trim() == userName.trim()
-        );
-        if (userNameExist != null) {
+      if (checkDuplicate) 
+      {
+        var userNameExist = this.loginData.find((item) => item.loginName.toLocaleLowerCase().trim() == userName.trim());
+        if (userNameExist != null) 
+        {
           alert('Duplicate record -"' + userName + '" already exists');
           return true;
         }
-        var emailExist = this.loginData.find(
-          (item) => item.emailId.toLocaleLowerCase().trim() == emailId.trim()
-        );
+        var emailExist = this.loginData.find((item) => item.emailId.toLocaleLowerCase().trim() == emailId.trim());
         if (emailExist != null) {
           alert('Duplicate record -"' + emailId + '" already exists');
           return true;
         }
       }
-      if (checkDuplicateEmail) {
+      if (checkDuplicateEmail) 
+      {
         var emailExist = this.loginData.find(
           (item) => item.emailId.toLocaleLowerCase().trim() == emailId.trim()
         );
@@ -165,14 +185,16 @@ export class RegistrationComponent implements OnInit {
   }
   onAdd() {
     let formValue = this.regForm.value;
-
+    console.log(formValue)
     let obj = {
       loginName: formValue.userName,
       emailId: formValue.emailId,
       roleId: formValue.role,
       type: "post",
     };
+    console.log(obj)
     this.service.PostRegistrationData(obj).subscribe((data) => {
+      console.log(data)
       alert("Candidate Added Successfully");
       this.regForm.reset();
       this.getLoginData();
@@ -202,6 +224,11 @@ export class RegistrationComponent implements OnInit {
     } else {
       alert("Data not Deleted");
     }
+  }
+  UpdateHeader() {
+    this.regForm.reset();
+    this.editMode = false;
+    this.getRoles();
   }
   download() {
     this.downloadObject = this.createObject(this.loginData);

@@ -49,6 +49,9 @@ export class SoListComponent implements OnInit, IDeactivate {
   editMode: any = this.router.snapshot.queryParams['editMode']
   editDetails: any = this.router.snapshot.queryParams['myArray'];
   Id: any;
+  selectedRegionId: string = '';
+  isRegionSelected: boolean = false;
+
 
   constructor(private service: SOWService, private regionService: RegionserviceService, private locationService: LocationserviceService,
     private accountService: AccountserviceService, private tpmService: UsttpmserviceService, private pocService: UstpocserviceService, private recruiterService: RecruiterserviceService,
@@ -66,7 +69,7 @@ export class SoListComponent implements OnInit, IDeactivate {
     this.GetStatusByType();
     this.GetDropdown7();
     this.GetDropdown8();
-    this.GetDropdown9();
+    // this.GetDropdown9();
     this.GetDropdown10();
     if (this.editMode) {
       this.service.GetSowById(this.editDetails).subscribe(res => {
@@ -99,6 +102,7 @@ export class SoListComponent implements OnInit, IDeactivate {
     }
   }
 
+
   dateTrim(data: any) {
     let datearr = data.split("T")
     return datearr[0];
@@ -130,10 +134,13 @@ export class SoListComponent implements OnInit, IDeactivate {
   get f() { return this.SowForm.controls; }
 
   onSubmit() {
+    console.log(this.SowForm.value)
     this.submitted = true;
     if (this.SowForm.invalid) {
+      this.markAllFieldsAsTouched();
       return;
     }
+    console.log(this.editMode)
     if (this.editMode) {
       this.onEdit();
     }
@@ -141,7 +148,17 @@ export class SoListComponent implements OnInit, IDeactivate {
       this.onAdd();
     }
   }
+  isFieldInvalid(fieldName: string): boolean {
+    const control = this.SowForm.get(fieldName);
+    return control.invalid && (control.touched || this.submitted);
+  }
 
+  markAllFieldsAsTouched() {
+    Object.keys(this.SowForm.controls).forEach(fieldName => {
+      this.SowForm.controls[fieldName].markAsTouched();
+    });
+
+  }
   onAdd() {
     let formValue = this.SowForm.value;
 
@@ -170,49 +187,86 @@ export class SoListComponent implements OnInit, IDeactivate {
     };
 
     this.service.PostSowData(obj).subscribe(data => {
-      alert("Candidate Added Successfully");
+      console.log(data)
+      alert(data);
       this.SowForm.reset();
-      //this.GetSowData();
+
     })
   }
 
-  onEdit() {
-    let formValue = this.SowForm.value;
 
+  onEdit() {
+
+    let formValue = this.SowForm.value;
     let obj = {
+
       sowId: this.Id,
+
       soName: formValue.soName,
+
       jrCode: formValue.jrCode,
+
       requestCreationDate: formValue.requestCreationDate,
+
       accountId: formValue.accountId,
+
       technologyId: formValue.technologyId,
+
       role: formValue.role,
+
       regionId: formValue.regionId,
+
       locationId: formValue.locationId,
+
       targetOpenPositions: formValue.targetOpenPositions,
+
       positionsTobeClosed: formValue.positionsTobeClosed,
+
       ustpocId: formValue.ustpocId,
+
       recruiterId: formValue.recruiterId,
+
       usttpmId: formValue.usttpmId,
+
       dellManagerId: formValue.dellManagerId,
+
       statusId: formValue.statusId,
+
       band: formValue.band,
+
       projectId: formValue.projectId,
+
       accountManager: formValue.accountManager,
+
       internalResource: (formValue.internalResource == null) ? "" : formValue.internalResource,
+
       externalResource: (formValue.externalResource == null) ? "" : formValue.externalResource,
+
       type: "update",
+
     };
+
     this.service.UpdateSowData(this.Id, obj).subscribe(res => {
+
       alert('Data updated successfully');
+
       this.SowForm.reset();
+
       this.editMode = false;
+
       this.Id = null;
+      this.route.navigate(['/sow'])
+
     }, err => {
+
       console.log(err);
-      this.editMode = false;
-      this.Id = null
+
+      // this.editMode = false;
+
+      // this.Id = null
+
     })
+
   }
 
   GetDropdown1() {
@@ -296,15 +350,25 @@ export class SoListComponent implements OnInit, IDeactivate {
     })
   }
 
-  GetDropdown9() {
+  onRegionSelected(regionId: string): void {
+
+    this.selectedRegionId = regionId;
+    console.log('Selected region:', this.selectedRegionId);
+    this.GetDropdown9(regionId);
+    this.isRegionSelected = true;
+
+  }
+
+  GetDropdown9(id: any) {
+
     return new Promise((res, rej) => {
-      this.locationService.GetAllLocationData().subscribe(result => {
+      this.locationService.GetLocationByRegionId(id).subscribe(result => {
         this.locationList = result;
+        console.log(this.locationList);
         res('')
       })
     })
   }
-
   GetDropdown10() {
     return new Promise((res, rej) => {
       this.mappingService.GetAllCandidateMappingData().subscribe((result) => {

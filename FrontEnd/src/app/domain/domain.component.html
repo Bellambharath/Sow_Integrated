@@ -9,7 +9,7 @@
     <div class="form-group row">
         <div class="col-12 col-md-4 mb-3">
             <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mappingModal">
+        <button type="button" (click)="UpdateHeader()" class="btn btn-primary btn1" data-toggle="modal" data-target="#mappingModal">
              Add
     </button>
         </div>
@@ -22,13 +22,13 @@
               </button>
         </div>
       </div>
-      <div class="container">
+      <div class="container rr">
    
         <div class="row tbl-fixed">
             <div style="flex-grow: 1; text-align: left; margin-bottom: 10px;">
             </div>
-            <table class="table table-fixed" >
-                <thead>
+            <table class="table table-fixed">
+                <thead >
                     <!-- <th class="tableborder">Domain Id</th> -->
                     <th class="tableborder">Domain Name</th>
                     <th class="tableborder" *ngIf="isAuthor">Actions</th>
@@ -78,8 +78,9 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="mappingModalLabel">Add Domain</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <h5 class="modal-title" id="mappingModalLabel">{{ editmode ? 'Edit Domain' : 'Add Domain' }}</h5>
+
+          <button id="close" type="button" class="close" (click)="resetForm()" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -100,7 +101,7 @@
                     </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" (click)="resetForm()" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Submit</button>
                       </div>
                 </form>

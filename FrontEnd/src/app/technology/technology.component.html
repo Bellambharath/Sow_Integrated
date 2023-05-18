@@ -6,7 +6,8 @@
         <div class="form-group row">
             <div class="col-12 col-md-4 mb-3">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mappingModal">
+                <button type="button" (click)="UpdateHeader()" class="btn btn-primary btn1" data-toggle="modal"
+                    data-target="#mappingModal">
                     Add
                 </button>
             </div>
@@ -20,8 +21,8 @@
                 </button>
             </div>
         </div>
-        
-        <div class="container">
+
+        <div class="container rr1">
             <div class="row tbl-fixed">
                 <table class="table table-fixed">
                     <thead>
@@ -36,7 +37,8 @@
                             <td class="tableborder">{{tech.technologyName}}</td>
                             <td class="tableborder">{{tech.domainName}}</td>
                             <td class="tableborder" *ngIf="isAuthor">
-                                <i class="bi bi-pencil-square" data-toggle="modal" data-target="#mappingModal" (click)="editDetails(tech)" title="Edit"></i>
+                                <i class="bi bi-pencil-square" data-toggle="modal" data-target="#mappingModal"
+                                    (click)="editDetails(tech)" title="Edit"></i>
                                 <!-- <button (click)="editDetails(tech)"><img src="../../assets/icons/edit.ico"
                                     class="icons"></button> &nbsp; -->
                             </td>
@@ -71,63 +73,66 @@
         </div>
     </div>
 
-    <!-- Mapping Modal -->
-    <div class="modal fade" id="mappingModal" tabindex="-1" role="dialog" aria-labelledby="mappingModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="mappingModalLabel">Add Domain</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div>
 
-                    <form [formGroup]="techForm" (ngSubmit)="onSubmit()">
-                        <div class="modal-body">
+<!-- Mapping Modal -->
+<div class="modal fade" id="mappingModal" tabindex="-1" role="dialog" aria-labelledby="mappingModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mappingModalLabel">{{ editmode ? 'Edit Technology' : 'Add Technology' }}
+                </h5>
+                <button type="button" class="close" (click)="resetForm()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div>
 
-                            <div class="form-group row">
+                <form [formGroup]="techForm" (ngSubmit)="onSubmit()">
+                    <div class="modal-body">
 
-                                <label for="technologyName"
-                                    class="col-sm-4 col-md-4 mb-1 ml-3 col-form-label">Technology Name</label>
+                        <div class="form-group row">
 
-                                <div class="col-sm-8 col-md-7 mb-1 ">
-                                    <input type="text" id="technologyName" class="form-control" name="technologyName"
-                                        formControlName="technologyName" placeholder="Enter Technology Name" required>
-                                    <div *ngIf="(f.technologyName.touched) && f.technologyName.invalid"
-                                        class="text-danger">
-                                        <div *ngIf="f.technologyName.errors.required"><small>*Technology Name is required</small></div>
-                                    </div>
+                            <label for="technologyName" class="col-sm-4 col-md-4 mb-1 ml-3 col-form-label">Technology
+                                Name</label>
+
+                            <div class="col-sm-8 col-md-7 mb-1 ">
+                                <input type="text" id="technologyName" class="form-control" name="technologyName"
+                                    formControlName="technologyName" placeholder="Enter Technology Name" required>
+                                <div *ngIf="(f.technologyName.touched) && f.technologyName.invalid" class="text-danger">
+                                    <div *ngIf="f.technologyName.errors.required"><small>*Technology Name is
+                                            required</small></div>
                                 </div>
-                            </div>
-                            <div class="form-group row">
-
-                                <label for="sowId"  class="col-sm-4 col-md-4 mb-1 ml-3 col-form-label">Domain</label>
-
-                                <div class="col-sm-8 col-md-7 mb-1 ">
-
-                                    <select id="domainId" class="form-control" name="domainId"
-                                        formControlName="domainId">
-                                        <option value="" disabled selected>Select a Domain</option>
-                                        <option *ngFor="let domain of DomainList" value="{{domain.domainId}}">
-                                            {{domain.domainName}}
-                                        </option>
-                                    </select>
-                                    <div *ngIf="(f.domainId.touched) && f.domainId.invalid" class="text-danger">
-                                        <div *ngIf="f.domainId.errors.required"><small>*Domain is required</small></div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
-                    </form>
-                </div>
+                        <div class="form-group row">
+
+                            <label for="sowId" class="col-sm-4 col-md-4 mb-1 ml-3 col-form-label">Domain</label>
+
+                            <div class="col-sm-8 col-md-7 mb-1 ">
+
+                                <select id="domainId" class="form-control" name="domainId" formControlName="domainId">
+                                    <option value=""  selected hidden>Select a Domain</option>
+                                    <option *ngFor="let domain of DomainList" value="{{domain.domainId}}">
+                                        {{domain.domainName}}
+                                    </option>
+                                </select>
+                                <div *ngIf="(f.domainId.touched) && f.domainId.invalid" class="text-danger">
+                                    <div *ngIf="f.domainId.errors.required"><small>*Domain is required</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <button id="close" type="button" class="btn btn-secondary" (click)="resetForm()"
+                                data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>

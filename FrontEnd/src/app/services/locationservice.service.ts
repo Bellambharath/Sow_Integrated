@@ -14,6 +14,13 @@ export class LocationserviceService {
   GetAllLocationData(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}`);
   }
+  GetLocationByRegionId(id:any): Observable<any> {
+    let Id:number=parseInt(id);
+    // return this.http.get<any>(`${this.baseUrl}/getbyregion?id=${Id}`);
+    return this.http.get<any>("https://localhost:7187/api/Location/getbyregion?id="+Id);
+  }
+
+
   PostLocationData(data: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}`,data );
   }

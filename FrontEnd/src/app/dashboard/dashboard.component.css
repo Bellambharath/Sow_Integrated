@@ -1,3 +1,4 @@
+
 h2 {
   text-align: center;
   caret-color: transparent; /* Add this line to stop blinking cursor */
@@ -42,9 +43,9 @@ h2 {
   white-space: nowrap;
   min-width: 280px;
   width: 10%;
-  background: #cccccccf;
+ background-color: #ccc;
   border: solid 1px black;
-
+  
 }
 
 .dropdown {
@@ -74,6 +75,22 @@ label{
 .card-content:hover{
 background-color: #cccccc4d;
 }
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active  {
+  color: #2980B9 ;
+  background-color: #fff;
+  border-color: #4b4d4f #343637 #131212;
+  
+}
+.nav-item{
+  cursor:pointer;
+}
+
+.alternate-color {
+  background-color: #edf1eb; /* Alternate color for list items */
+}
+
+
 
 @media screen and (max-width: 768px) {
   .cards_wrap {

@@ -134,7 +134,7 @@ namespace SowController.Controllers
 
         // POST api/<Sow_Controller>
         [HttpPost]
-        public void Post([FromBody] Sow sp)
+        public string Post([FromBody] Sow sp)
         {
             string dbConn = configuration.GetSection("ConnectionStrings").GetSection("DbConnection").Value;
             Db dop = new Db(dbConn);
@@ -142,11 +142,13 @@ namespace SowController.Controllers
             try
             {
                 msg = dop.sowtable(sp);
+               
             }
             catch (Exception ex)
             {
                 msg = ex.Message;
             }
+            return msg;
         }
 
         // update api/<Sow_Controller>/5
@@ -170,7 +172,7 @@ namespace SowController.Controllers
 
         // DELETE api/<Sow_Controller>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public string Delete(int id)
         {
             string dbConn = configuration.GetSection("ConnectionStrings").GetSection("DbConnection").Value;
             Db dop = new Db(dbConn);
@@ -186,6 +188,7 @@ namespace SowController.Controllers
             {
                 msg = ex.Message;
             }
+            return msg;
         }
         [HttpGet]
         [Route("Getdate")]

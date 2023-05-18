@@ -39,7 +39,7 @@ namespace CandidateSoW.Controllers
 
         // POST api/<CandidateController>
         [HttpPost]
-        public void Post([FromBody] CandidateModel candidate)
+        public string Post([FromBody] CandidateModel candidate)
         {
             string dbConn = configuration.GetSection("ConnectionStrings").GetSection("DbConnection").Value;
             Db dop = new Db(dbConn);
@@ -52,6 +52,7 @@ namespace CandidateSoW.Controllers
             {
                 msg = ex.Message;
             }
+            return msg;
         }
 
         // PUT api/<CandidateController>/5
@@ -73,7 +74,7 @@ namespace CandidateSoW.Controllers
 
         // DELETE api/<CandidateController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public string Delete(int id)
         {
             string dbConn = configuration.GetSection("ConnectionStrings").GetSection("DbConnection").Value;
             Db dop = new Db(dbConn);
@@ -86,6 +87,7 @@ namespace CandidateSoW.Controllers
             {
                 msg = ex.Message;
             }
+            return msg;
         }
         [HttpGet]
         [Route("Getdate")]
@@ -94,7 +96,8 @@ namespace CandidateSoW.Controllers
             string dbConn = configuration.GetSection("ConnectionStrings").GetSection("DbConnection").Value;
             Db dop = new Db(dbConn);
             //return dop.GetAllCandidateData().Where(e=>e.CandidateId == id).ToList();
-            return dop.GetCandidateDate(StartDate, EndDate);
+            List<CandidateModel> data = dop.GetCandidateDate(StartDate, EndDate);
+            return data;
         }
         [HttpPost]
         [Route("ImportData")]

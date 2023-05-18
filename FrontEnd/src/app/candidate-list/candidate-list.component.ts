@@ -47,7 +47,8 @@ export class CandidateListComponent implements OnInit, IDeactivate {
   ngOnInit(): void {
     this.commonServ.headerContent(false);
     this.GetStatusByType();
-    if (this.editMode) {
+    if (this.editMode) 
+    {
       this.service.GetCandidateById(this.editDetails).subscribe(res => {
         res.map((obj) => {
           this.Id = obj.candidateId;
@@ -78,48 +79,79 @@ export class CandidateListComponent implements OnInit, IDeactivate {
   onSubmit() {
     this.submitted = true;
     if (this.candidateform.invalid) {
+      this.markAllFieldsAsTouched();
       return;
     }
     if (this.editMode) {
       this.onEdit();
     }
     else {
+
       this.onAdd();
     }
   }
+  isFieldInvalid(fieldName: string): boolean {
+    const control = this.candidateform.get(fieldName);
+    return control.invalid && (control.touched || this.submitted);
+  }
 
+  markAllFieldsAsTouched() {
+    Object.keys(this.candidateform.controls).forEach(fieldName => {
+      this.candidateform.controls[fieldName].markAsTouched();
+    });
+  }
   onAdd() {
+
+    console.log(this.candidateform.value);
     let obj = this.candidateform.value;
     obj.isInternal = (obj.isInternal != true) ? false : true;
     this.service.PostCandidateData(obj).subscribe(data => {
-      alert("Candidate Added Successfully");
+      alert(data);
       this.candidateform.reset();
-      //this.GetCandidateData();
+      
     })
   }
 
+
   onEdit() {
+    console.log("at edit")
     let formValue = this.candidateform.value;
-    let obj = {
-      candidateId: this.Id,
-      candidateName: formValue.candidateName,
+    let defaultFormValue = {
       dob: formValue.dob,
+
       address: formValue.address,
+
       gender: formValue.gender,
+
       location: formValue.location,
+
       joiningDate: formValue.joiningDate,
       mobileNo: formValue.mobileNo,
       skills: formValue.skills,
-      email: formValue.email,
       status: formValue.status,
       pincode: formValue.pincode,
       isInternal: formValue.isInternal,
+
+    };
+    let updatedFormValue = {
+      ...formValue,
+      ...defaultFormValue
+    };
+
+    let obj = {
+      candidateId: this.Id,
+      candidateName: formValue.candidateName,
+      email: formValue.email,
+      ...updatedFormValue,
+      type: 'update'
     };
     this.service.UpdateCandidateData(this.Id, obj).subscribe(res => {
+
       alert('Data updated successfully');
       this.candidateform.reset();
       this.editMode = false;
       this.Id = null;
+      this.route.navigate(['/candidatedetails'])
     }, err => {
       console.log(err);
       this.editMode = false;

@@ -12,7 +12,7 @@ export class DashboardComponent implements OnInit {
   title = 'Bytes';
   activeTab: string = 'SO Details';
   selectedTeam: string;
-  Name:any;
+  Name:any; 
   statuses:any;
   z: any;
   technologies: any;

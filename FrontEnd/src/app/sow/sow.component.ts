@@ -35,7 +35,7 @@ import * as XLSX from "xlsx";
 })
 export class SOWComponent implements OnInit {
   file: File;
-  arrayBuffer: any;
+  arrayBuffer: any; 
   filelist: any;
   sowlist: SOModel[] = [];
   SowList: SOModel[] = [];
@@ -90,6 +90,7 @@ export class SOWComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+   
     this.isAuthor = JSON.parse(sessionStorage.getItem("author"));
     // await this.GetDropdown1();
     // await this.GetDropdown2();
@@ -100,7 +101,7 @@ export class SOWComponent implements OnInit {
     // await this.GetDropdown7();
     // await this.GetDropdown8();
     // await this.GetDropdown9();
-    // await this.GetDropdown10();
+    await this.GetDropdown10();
     this.GetSowData();
   }
 
@@ -399,6 +400,7 @@ export class SOWComponent implements OnInit {
   }
 
   onEdit() {
+    console.log("at on edit")
     let formValue = this.SowForm.value;
 
     let obj = {
@@ -480,6 +482,7 @@ export class SOWComponent implements OnInit {
   }
 
   editDetails(data: any) {
+    
     this.editmode = true;
     this.Id = data.sowId;
     this.router.navigate(["/soList"], {
@@ -523,7 +526,7 @@ export class SOWComponent implements OnInit {
       });
       if (obj == null) {
         this.service.DeleteSowData(data.sowId).subscribe((res) => {
-          alert("Data Deleted Successfully");
+          alert(res);
           this.GetSowData();
           this.Id = null;
         });

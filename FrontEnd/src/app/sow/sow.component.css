@@ -5,7 +5,7 @@
 }
 .card1{
   border: 1px solid rgba(0, 0, 0, 0.226);
-  background-color: #f2f2f2;
+  /* background-color: #f2f2f2; */
   height:max-content;
   max-width: 100%;
   margin: 0 auto; 
@@ -58,6 +58,16 @@
   width: 25px;
   
   
+}
+.rrr{
+ width:85%;
+ margin-left: 7%;
+}
+.rr1{
+  max-width: 750px;
+}
+.rr {
+    max-width: 650px;
 }
 .Add{
   margin-right: 10px;
@@ -132,14 +142,19 @@ button[type=submit]:hover {
     margin-top: 0;
   }
 }
-
+ 
 
 #downloadbtn {
   color: black;
   /* background-color: aqua;
     border-color: #007bff; */
 }
-
+.btn1{
+  margin-left: 260px;
+}
+.btn2{
+  margin-left: 150px;
+}
 .tbl-fixed {
   overflow-x: scroll;
   overflow-y: scroll;
@@ -148,6 +163,7 @@ button[type=submit]:hover {
   max-width: 100%;
   padding: 0;
   float: none;
+ 
 }
 
 table {
@@ -160,6 +176,7 @@ table th {
   display: flexbox;
   position: sticky;
   top: 0px;
+  padding: 2px;
   background: #504f4f;
   color: #fff;
   text-align: center;
@@ -168,6 +185,7 @@ table th {
 table td {
   text-align: center;
   padding: 10px 10px 10px 10px;
+  font-size: 14px;
 }
 /* You can add global styles to this file, and also import other style files */
 .result-loader {

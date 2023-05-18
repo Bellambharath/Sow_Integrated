@@ -10,7 +10,10 @@ export class AuthGuard implements CanActivate {
 
     data = sessionStorage.getItem('userData');
     userInfo = (this.data) ? JSON.parse(this.data) : null;
-    canActivate(route: ActivatedRouteSnapshot): boolean {
+    canActivate(route: ActivatedRouteSnapshot): boolean 
+    {
+        this.data = sessionStorage.getItem('userData');
+        this.userInfo = (this.data) ? JSON.parse(this.data) : null;
         if (this._authService.loggedIn()) {
             return this.checkforUserAccess(route);
         } else {

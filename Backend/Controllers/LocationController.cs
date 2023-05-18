@@ -47,6 +47,39 @@ namespace CandidateSoW.Controllers
             return list;
         }
 
+
+
+        // GET: api/<LocationController>
+        [HttpGet]
+        [Route("getbyregion")]
+        public List<LocationModel> GetByRegion(int id)
+        {
+
+            string dbConn = configuration.GetSection("ConnectionStrings").GetSection("DbConnection").Value;
+            Db dop = new Db(dbConn);
+            LocationModel ls = new LocationModel();
+            ls.Type = "getbyregionid";
+            ls.RegionId = id;
+            DataSet ds = dop.locationtableget(ls, msg);
+            List<LocationModel> list = new List<LocationModel>();
+            if (ds.Tables.Count > 0)
+            {
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        list.Add(new LocationModel
+                        {
+                            LocationId = Convert.ToInt32(dr["LocationId"]),
+                            Location = dr["Location"].ToString(),
+                            RegionId = Convert.ToInt32(dr["RegionId"]),
+                        });
+                    }
+                }
+            }
+            return list;
+        }
+
         // GET api/<LocationController>/5
         [HttpGet("{id}")]
         public List<LocationModel> Get(int id)

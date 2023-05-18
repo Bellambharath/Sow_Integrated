@@ -62,6 +62,7 @@ export class ChangePasswordComponent implements OnInit {
 
     if (this.passwordForm.invalid) 
     { 
+      this.markAllFieldsAsTouched();
       console.log("form is invalid")
       return;
       
@@ -69,6 +70,16 @@ export class ChangePasswordComponent implements OnInit {
       this.onAdd();
     }
     
+    }
+    isFieldInvalid(fieldName: string): boolean {
+      const control = this.passwordForm.get(fieldName);
+      return control.invalid && (control.touched || this.submitted);
+    }
+    
+    markAllFieldsAsTouched() {
+      Object.keys(this.passwordForm.controls).forEach(fieldName => {
+        this.passwordForm.controls[fieldName].markAsTouched();
+      });
     }
 
     onAdd() {

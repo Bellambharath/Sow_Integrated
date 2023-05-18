@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CandidateModel } from '../Models/CandidateModel';
 import { SOModel } from '../Models/SOModel';
@@ -42,7 +42,7 @@ export class CandidatemappingComponent implements OnInit {
   previousInterval: any;
 
   constructor(private service: CandidatemappingService, private candidateService: CandidateService, private sowService: SOWService,
-    private statusService: StatusserviceService, private excelService: ExcelService,
+    private statusService: StatusserviceService, private excelService: ExcelService,private elementRef: ElementRef,
     private login: LoginService) {
   }
 
@@ -55,6 +55,15 @@ export class CandidatemappingComponent implements OnInit {
     console.log(this.isAuthor)
     this.GetMappingsData();
   }
+  callClose() {
+    const closeElement: HTMLElement = this.elementRef.nativeElement.querySelector('#close');
+    if (closeElement) {
+
+      closeElement.click();
+
+    }
+
+  }
   OnNextHeld() {
     this.nextInterval = setInterval(() => {
       if (this.currentPage < this.totalPages) {
@@ -64,11 +73,11 @@ export class CandidatemappingComponent implements OnInit {
       }
     }, 200);
   }
-  
+
   OnNextReleased() {
     clearInterval(this.nextInterval);
   }
-  
+
   OnPreviousHeld() {
     this.previousInterval = setInterval(() => {
       if (this.currentPage > 1) {
@@ -78,7 +87,7 @@ export class CandidatemappingComponent implements OnInit {
       }
     }, 200);
   }
-  
+
   OnPreviousReleased() {
     clearInterval(this.previousInterval);
   }
@@ -167,6 +176,7 @@ export class CandidatemappingComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.mapppingForm.invalid) {
+      this.markAllFieldsAsTouched();
       console.log('invalid');
       return;
     }
@@ -181,6 +191,17 @@ export class CandidatemappingComponent implements OnInit {
         this.onAdd();
       }
     }
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    const control = this.mapppingForm.get(fieldName);
+    return control.invalid && (control.touched || this.submitted);
+  }
+
+  markAllFieldsAsTouched() {
+    Object.keys(this.mapppingForm.controls).forEach(fieldName => {
+      this.mapppingForm.controls[fieldName].markAsTouched();
+    });
   }
 
   isDuplicate(isEdit: boolean) {
@@ -219,6 +240,7 @@ export class CandidatemappingComponent implements OnInit {
       this.GetMappingsData();
       this.editmode = false;
       this.Id = null;
+      this.callClose();
     }, err => {
       console.log(err);
       this.editmode = false;
@@ -315,6 +337,21 @@ export class CandidatemappingComponent implements OnInit {
       'SOCandidate Mapping Data': data,
     }
   }
+
+  resetForm() {
+    this.mapppingForm.reset();
+  }
+  UpdateHeader() {
+    this.mapppingForm.reset();
+    this.editmode = false;
+    this.GetDropdown2();
+    this.GetDropdown1();
+    this.GetDropdown3();
+
+
+  }
+
+
 
   GetSOCandidateDetails() {
     if (this.MappingsList != undefined || this.MappingsList != null) {
