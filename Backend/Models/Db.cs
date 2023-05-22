@@ -1615,7 +1615,8 @@ namespace CandidateSoW.Models
             DataTable dt = new DataTable();
             try
             {
-                string query = "select * from Candidate where CONVERT(date, JoiningDate) between  @StartDate and  @EndDate";
+                string query = "select CandidateId,CandidateName,MobileNo,DOB,EmailId,Location,Skills,JoiningDate,IsInternal,Address,B.StatusName Status,Pincode,Gender from Candidate A Inner Join[dbo].[Status] B On" +
+                    " A.Status = B.StatusId where (CONVERT(date, JoiningDate) between  @StartDate and  @EndDate) and A.isDeleted=0 ";
 
 
 

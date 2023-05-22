@@ -6,8 +6,8 @@
     <div class="form-group row">
 
       <div class="col-8 col-md-2 mb-3"></div>
-      <div class="dropdown col-12 col-md-2 mb-3">
-        <button class="btn btn-primary dropdown-toggle" type="button" id="addDropdown" data-toggle="dropdown"
+      <div  class="dropdown col-12 col-md-2 mb-3">
+        <button *ngIf="isAuthor" class="btn btn-primary dropdown-toggle" type="button" id="addDropdown" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           Add
         </button>
@@ -37,7 +37,7 @@
     </div>
 
 
-    
+
     <div class="container tbl-container">
       <div class="row tbl-fixed">
         <div class="result-loader" *ngIf="resultloader">
@@ -140,5 +140,4 @@
       </div>
     </div>
   </div>
-</div> 
-
+</div>

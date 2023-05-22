@@ -31,14 +31,15 @@ export class TechnologyComponent implements OnInit {
   rowCount: Number;
   prevTechnologyName: any;
   prevDomainId: any;
-  timer:any
+  timer: any
   nextInterval: any;
   previousInterval: any;
-  maxCountError:string;
-  minCountError:string;
+  maxCountError: string;
+  minCountError: string;
+  downloadData:any=[];
 
-  constructor(private service: TechnologyService, private domainService: DomainService, 
-    private excelService: ExcelService, private login: LoginService,private elementRef: ElementRef) {
+  constructor(private service: TechnologyService, private domainService: DomainService,
+    private excelService: ExcelService, private login: LoginService, private elementRef: ElementRef) {
   }
 
   async ngOnInit() {
@@ -55,9 +56,28 @@ export class TechnologyComponent implements OnInit {
   get f() { return this.techForm.controls; }
 
   GetAllTechData() {
+    
     this.service.GetAllTechData().subscribe(data => {
       this.TechList = data;
       this.TechData = data;
+      for (var i in this.TechData) {
+
+        const keyValuePairs: { [key: string]: string } = {
+  
+          technologyName: data[i].technologyName,
+  
+          domainName: data[i].domainName,
+  
+  
+  
+        };
+  
+        this.downloadData.push(keyValuePairs);
+  
+  
+  
+  
+      }
       console.log(data);
       this.rowCount = this.TechList.length;
       //this.GetTechDetails();
@@ -101,18 +121,17 @@ export class TechnologyComponent implements OnInit {
     const control = this.techForm.get(fieldName);
     return control.invalid && (control.touched || this.submitted);
   }
-  
+
   markAllFieldsAsTouched() {
     Object.keys(this.techForm.controls).forEach(fieldName => {
       this.techForm.controls[fieldName].markAsTouched();
     });
   }
- 
-  resetForm(){
+
+  resetForm() {
     this.techForm.reset();
   }
-  UpdateHeader()
-  {
+  UpdateHeader() {
     this.techForm.reset();
     this.editmode = false;
     this.populateDropdowns();
@@ -127,11 +146,11 @@ export class TechnologyComponent implements OnInit {
       }
     }, 200);
   }
-  
+
   OnNextReleased() {
     clearInterval(this.nextInterval);
   }
-  
+
   OnPreviousHeld() {
     this.previousInterval = setInterval(() => {
       if (this.currentPage > 1) {
@@ -141,11 +160,11 @@ export class TechnologyComponent implements OnInit {
       }
     }, 200);
   }
-  
+
   OnPreviousReleased() {
     clearInterval(this.previousInterval);
   }
-  
+
 
 
 
@@ -261,8 +280,8 @@ export class TechnologyComponent implements OnInit {
   // }
 
   download() {
-    this.downloadObject = this.createObject(this.TechData)
-    let headers = [['Technology Id', 'Technology Name', 'Domain Name']]
+    this.downloadObject = this.createObject(this.downloadData)
+    let headers = [[ 'Technology Name', 'Domain Name']]
     this.excelService.jsonExportAsExcel(this.downloadObject, "Technology Details", headers);
   }
 
@@ -312,12 +331,12 @@ export class TechnologyComponent implements OnInit {
     endIndex = Number(this.pageSizeSelected) + startIndex;
 
     this.batchRecord = this.TechData.slice(startIndex, endIndex);
-    
-  
+
+
   }
- 
-  
-  
+
+
+
 
   OnPageNumberChanged(event: any) {
     let startIndex: number = 0;

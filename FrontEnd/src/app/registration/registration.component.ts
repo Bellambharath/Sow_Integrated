@@ -32,12 +32,13 @@ export class RegistrationComponent implements OnInit {
   lock: boolean = true;
   nextInterval: any;
   previousInterval: any;
+  downloadData:any=[];
 
   constructor(
     private service: RegistrationService,
     private excelService: ExcelService,
     private loginService: LoginService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.isAuthor = JSON.parse(sessionStorage.getItem("author"));
@@ -45,8 +46,7 @@ export class RegistrationComponent implements OnInit {
     this.getRoles();
     this.getLoginData();
   }
-  getRoles()
-  {
+  getRoles() {
     this.service.GetRoleData().subscribe((result) => {
       this.roleName = result;
     });
@@ -56,6 +56,47 @@ export class RegistrationComponent implements OnInit {
       (result) => {
         console.log(result);
         this.loginData = result;
+        for (var i in this.loginData) {
+
+
+
+
+          const keyValuePairs: { [key: string]: string } = {
+
+
+
+
+            loginName: result[i].loginName,
+
+
+
+
+            emailId: result[i].emailId,
+
+
+
+
+            roleName: result[i].roleName,
+
+
+
+
+          };
+
+
+
+
+          this.downloadData.push(keyValuePairs);
+
+
+
+
+          console.log(this.downloadData);
+
+
+
+
+        }
         this.rowCount = this.loginData.length;
         this.resultloader = false;
         this.totalPages = Math.ceil(
@@ -83,17 +124,13 @@ export class RegistrationComponent implements OnInit {
       return;
     }
 
-    if (this.editMode) 
-    {
-      if (!this.isDuplicate(true)) 
-      {
+    if (this.editMode) {
+      if (!this.isDuplicate(true)) {
         this.onEdit();
       }
-    } 
-    else 
-    {
-      if (!this.isDuplicate(false)) 
-      {
+    }
+    else {
+      if (!this.isDuplicate(false)) {
         this.onAdd();
       }
     }
@@ -111,31 +148,25 @@ export class RegistrationComponent implements OnInit {
 
   }
 
-  isDuplicate(isEdit: boolean) 
-  {
+  isDuplicate(isEdit: boolean) {
     //debugger;
     let checkDuplicate = true;
     let checkDuplicateEmail = false;
     let formValue = this.regForm.value;
-    if (formValue != null) 
-    {
+    if (formValue != null) {
       console.log(formValue)
       let userName = formValue.userName;
       let emailId = formValue.emailId;
-      if (isEdit && this.prevUserName.trim().toLowerCase() === userName.trim().toLowerCase()) 
-      {
+      if (isEdit && this.prevUserName.trim().toLowerCase() === userName.trim().toLowerCase()) {
         checkDuplicate = false;
       }
-      if (isEdit &&this.prevEmailId.trim().toLocaleLowerCase() != emailId.trim().toLocaleLowerCase()) 
-      {
+      if (isEdit && this.prevEmailId.trim().toLocaleLowerCase() != emailId.trim().toLocaleLowerCase()) {
         checkDuplicateEmail = true;
       }
 
-      if (checkDuplicate) 
-      {
+      if (checkDuplicate) {
         var userNameExist = this.loginData.find((item) => item.loginName.toLocaleLowerCase().trim() == userName.trim());
-        if (userNameExist != null) 
-        {
+        if (userNameExist != null) {
           alert('Duplicate record -"' + userName + '" already exists');
           return true;
         }
@@ -145,8 +176,7 @@ export class RegistrationComponent implements OnInit {
           return true;
         }
       }
-      if (checkDuplicateEmail) 
-      {
+      if (checkDuplicateEmail) {
         var emailExist = this.loginData.find(
           (item) => item.emailId.toLocaleLowerCase().trim() == emailId.trim()
         );
@@ -231,14 +261,11 @@ export class RegistrationComponent implements OnInit {
     this.getRoles();
   }
   download() {
-    this.downloadObject = this.createObject(this.loginData);
+    this.downloadObject = this.createObject(this.downloadData);
     let headers = [
       [
-        "Login Name",
-        "Login Password",
         "Login Id",
         "Email Id",
-        "Role Id",
         "Role Name",
       ],
     ];

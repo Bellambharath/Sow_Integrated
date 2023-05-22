@@ -69,6 +69,7 @@ button[type=submit],[type=reset] {
   margin-bottom: 20px;
   border-radius: 5px; 
   caret-color: transparent; /* Add this line to stop blinking cursor */ 
+  
 }
 
 

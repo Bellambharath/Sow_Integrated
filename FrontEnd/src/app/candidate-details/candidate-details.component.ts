@@ -45,7 +45,7 @@ export class CandidateDetailsComponent implements OnInit {
   startDate: string;
   nextInterval: any;
   previousInterval: any;
-
+  downloadData:any=[];
   constructor(
     private service: CandidateService,
     private mappingService: CandidatemappingService,
@@ -53,7 +53,7 @@ export class CandidateDetailsComponent implements OnInit {
     public formBuilder: FormBuilder,
     private login: LoginService,
     private router: Router
-  ) {}
+  ) { }
 
   candidateform = new FormGroup({
     candidateName: new FormControl("", [Validators.required]),
@@ -120,7 +120,7 @@ export class CandidateDetailsComponent implements OnInit {
       console.log(this.filelist);
 
       this.service.PostCandidateDuplicateCheck(this.filelist).subscribe((x) => {
-        
+
         alert(x);
         this.service.GetAllCandidatesData().subscribe(
           (data) => {
@@ -282,8 +282,8 @@ export class CandidateDetailsComponent implements OnInit {
       } else {
         alert(
           "Mapping Exists for this candidate with SO." +
-            "\n" +
-            "Please unmap and then delete"
+          "\n" +
+          "Please unmap and then delete"
         );
       }
     } else {
@@ -313,13 +313,65 @@ export class CandidateDetailsComponent implements OnInit {
     this.service
       .GetCandidateByDate(this.fromDate, this.endDate)
       .subscribe((data) => {
-        if (data != null || data != undefined ) 
-        {
+        if (data != null || data != undefined) {
+          for (var i in data) {
+
+            const keyValuePairs: { [key: string]: string } = {
+
+              candidateName: data[i].candidateName,
+
+              mobileNo: data[i].mobileNo,
+
+              gender: data[i].gender,
+
+              dob: data[i].dob,
+
+              email: data[i].email,
+
+              location: data[i].location,
+
+              skills: data[i].skills,
+
+              joiningDate: data[i].joiningDate,
+
+              address: data[i].address,
+
+              status: data[i].status,
+
+              pincode: data[i].pincode,
+
+              isInternal: data[i].isInternal
+
+
+
+
+
+
+
+
+
+            };
+
+
+
+
+            this.downloadData.push(keyValuePairs);
+
+
+
+
+            console.log(this.downloadData);
+
+
+
+
+          }
+
           console.log(data.length);
-          this.downloadObject = this.createObject(data);
+          this.downloadObject = this.createObject(this.downloadData);
           let headers = [
             [
-              "Candidate Id",
+              
               "Candidate Name",
               "Mobile No",
               "Gender",
@@ -339,7 +391,7 @@ export class CandidateDetailsComponent implements OnInit {
             "Candidate Details",
             headers
           );
-        } 
+        }
         else alert("No Records found!");
       });
   }

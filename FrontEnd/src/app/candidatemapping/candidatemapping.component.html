@@ -3,12 +3,12 @@
 </div>
 <div class="page">
 <div class="card1">
-      <h2 class="headernew">SOCandidate Mapping</h2>
+      <h2 class="headernew">SO-Candidate Mapping</h2>
       
-  <div class="form-group row">
+  <div class="form-group row justify-content-between">
       <div class="col-12 col-md-4 mb-3">
           <!-- Button trigger modal -->
-      <button type="button" (click)="UpdateHeader()" class="btn btn-primary btn2" data-toggle="modal" data-target="#mappingModal">
+      <button *ngIf="isAuthor" type="button" (click)="UpdateHeader()" class="btn btn-primary btn2" data-toggle="modal" data-target="#mappingModal">
            Add
   </button>
       </div>
@@ -22,7 +22,7 @@
       </div>
     </div>
     
-      <div class="row tbl-fixed rrr">
+      <div class="row tbl-fixed mappingtb">
 
           <div style="flex-grow: 1; text-align: left; margin-bottom: 10px;">
 

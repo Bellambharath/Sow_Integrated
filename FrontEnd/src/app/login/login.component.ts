@@ -102,6 +102,7 @@ export class LoginComponent implements OnInit {
           if (this.userData.PermissionName.toLowerCase() == "edit") {
             sessionStorage.setItem("author", "true");
           }
+          console.log(this.userData)
           sessionStorage.setItem("userData", JSON.stringify(this.userData));
           this.loginForm.reset();
           if (formValue.loginPassword == "Sow@123") {

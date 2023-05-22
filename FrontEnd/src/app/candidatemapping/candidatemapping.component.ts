@@ -40,9 +40,9 @@ export class CandidatemappingComponent implements OnInit {
   prevCandidateId: any;
   nextInterval: any;
   previousInterval: any;
-
+  downloadData:any=[];
   constructor(private service: CandidatemappingService, private candidateService: CandidateService, private sowService: SOWService,
-    private statusService: StatusserviceService, private excelService: ExcelService,private elementRef: ElementRef,
+    private statusService: StatusserviceService, private excelService: ExcelService, private elementRef: ElementRef,
     private login: LoginService) {
   }
 
@@ -99,6 +99,48 @@ export class CandidatemappingComponent implements OnInit {
       this.rowCount = this.MappingsList.length;
       this.MappingData = [];
       this.MappingData = res;
+      for (var i in this.MappingData) {
+
+
+
+
+        const keyValuePairs: { [key: string]: string } = {
+
+
+
+
+          soName: res[i].soName,
+
+
+
+
+          candidateName: res[i].candidateName,
+
+
+
+
+          statusName: res[i].statusName,
+
+
+
+
+        };
+
+
+
+
+        this.downloadData.push(keyValuePairs);
+
+
+
+
+        console.log(this.downloadData);
+
+
+
+
+      }
+
       this.resultloader = false;
       //this.GetSOCandidateDetails();      
       this.totalPages = Math.ceil(this.MappingsList.length / this.pageSizeSelected);
@@ -327,8 +369,8 @@ export class CandidatemappingComponent implements OnInit {
   }
 
   download() {
-    this.downloadObject = this.createObject(this.MappingData)
-    let headers = [['SO Candidate Id', 'SO Name', 'Candidate Name', 'Status']]
+    this.downloadObject = this.createObject(this.downloadData)
+    let headers = [[ 'SO Name', 'Candidate Name', 'Status']]
     this.excelService.jsonExportAsExcel(this.downloadObject, "SOCandidate Mapping", headers);
   }
 

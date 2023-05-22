@@ -1,5 +1,6 @@
-import {Component,EventEmitter,OnInit,Output, ElementRef, Renderer2, HostListener} from "@angular/core";
+import { Component, EventEmitter, OnInit, Output, ElementRef, Renderer2, HostListener } from "@angular/core";
 import { CommonService } from "../common.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-header",
@@ -15,6 +16,9 @@ export class HeaderComponent implements OnInit {
   login: boolean = false;
   dashboard: boolean = false;
   header: boolean = false;
+  solist: boolean = false;
+  candidatelist: boolean = false;
+
   public isChecked = false;
   registration: boolean = false;
   @Output() eventChange: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -23,19 +27,33 @@ export class HeaderComponent implements OnInit {
   showMoreItems: boolean = false;
   ChangePW: boolean = false;
   Username: string = "";
-
-  constructor(private commonServ: CommonService,private elementRef:ElementRef,private renderer: Renderer2) {}
+  isAuthor: boolean = false;
+  constructor(private commonServ: CommonService, private elementRef: ElementRef,
+    private renderer: Renderer2, private router: Router) { }
 
   ngOnInit(): void {
-   
+
     //  document.addEventListener('click', this.closeNavbarOnClickPage.bind(this));
 
-    
+    this.isAuthor = JSON.parse(sessionStorage.getItem("author"));
     this.Username = this.getUserName();
     this.loggedIn();
   }
+
+  // @HostListener('window:resize', ['$event'])
+  // resizeHandler(event: any) {
+  //   console.log("Window size check", window.innerWidth >= 768); // Adjust the breakpoint as per your mobile/desktop threshold
+  //   console.log(this.isChecked)
+  //   if(((window.innerWidth >= 768)==false)&&this.isChecked==true)
+  //   {
+  //     this.isChecked=true;
+  //     this.eventChange.emit(false);
+      
+  //   }
+    
+  // }
   MenuClose() {
-    const closeElement: HTMLElement =this.elementRef.nativeElement.querySelector("#navbartoggler");
+    const closeElement: HTMLElement = this.elementRef.nativeElement.querySelector("#navbartoggler");
 
     if (closeElement) {
       closeElement.click();
@@ -43,13 +61,14 @@ export class HeaderComponent implements OnInit {
   }
   // closeNavbarOnClickPage(event: MouseEvent) {
   //   const closeElement: HTMLElement = this.elementRef.nativeElement.querySelector("#navbartoggler");
-    
+
   //   if (!closeElement.contains(event.target as Node)) {
   //     this.MenuClose(); 
   //   }
   //}
 
   update() {
+    console.log("in update",this.isChecked)
     this.isChecked = !this.isChecked;
     this.eventChange.emit(this.isChecked);
     console.log("menu");
@@ -59,6 +78,9 @@ export class HeaderComponent implements OnInit {
     this.header = false;
     this.setAllDefaults();
     sessionStorage.clear();
+
+    console.log(sessionStorage.getItem("toggle"))
+    this.router.navigate(['/login'])
     //location.reload();
   }
   loggedIn() {
@@ -79,59 +101,42 @@ export class HeaderComponent implements OnInit {
           this.header = true;
           let data = sessionStorage.getItem("userData");
           let resData = data ? JSON.parse(data) : null;
-          if (resData.RoleName == "Admin") this.ChangePW = true;
+
           let ScreenNames = resData.ScreenNames.split(",");
           console.log(ScreenNames);
-          if (
-            sessionStorage.getItem("toggle") != null ||
-            sessionStorage.getItem("toggle") != undefined
-          ) {
-            let obj = sessionStorage.getItem("toggle");
-            let objData = obj ? JSON.parse(obj) : null;
-            console.log(objData);
-            for (let key of Object.keys(objData)) {
-              if (key == "sow") {
-                this.sow = objData.sow;
-              }
-              if (key == "candidatedetails") {
-                this.candidatedetails = objData.candidatedetails;
-              }
-              if (key == "mapping") {
-                this.mapping = objData.mapping;
-              }
-              if (key == "domain") {
-                this.domain = objData.domain;
-              }
-              if (key == "technology") {
-                this.technology = objData.technology;
-              }
-              if (key == "registration") {
-                this.registration = objData.registration;
-              }
-            }
-          } 
-          else {
+
+          if (sessionStorage.getItem("toggle") == null ||
+            sessionStorage.getItem("toggle") == undefined) {
+
             for (let i = 0; i < ScreenNames.length; i++) {
               if (ScreenNames[i].toLowerCase() == "sow") {
                 this.sow = true;
               }
-              if (ScreenNames[i].toLowerCase() == "candidatedetails") {
+              else if (ScreenNames[i].toLowerCase() == "candidatedetails") {
                 this.candidatedetails = true;
               }
-              if (ScreenNames[i].toLowerCase() == "mapping") {
+              else if (ScreenNames[i].toLowerCase() == "mapping") {
                 this.mapping = true;
               }
-              if (ScreenNames[i].toLowerCase() == "domain") {
+              else if (ScreenNames[i].toLowerCase() == "domain") {
                 this.domain = true;
               }
-              if (ScreenNames[i].toLowerCase() == "technology") {
+              else if (ScreenNames[i].toLowerCase() == "technology") {
                 this.technology = true;
               }
-              if (ScreenNames[i].toLowerCase() == "registration") {
+              else if (ScreenNames[i].toLowerCase() == "registration") {
                 this.registration = true;
               }
+              else if (ScreenNames[i].toLowerCase() == "changepassword") {
+                this.ChangePW = true;
+              }
+              else if (ScreenNames[i].toLowerCase() == "solist") {
+                this.solist = true;
+              }
+              else if (ScreenNames[i].toLowerCase() == "candidatelist") {
+                this.candidatelist = true;
+              }
             }
-
             let obj = {
               sow: this.sow,
               candidatedetails: this.candidatedetails,
@@ -139,10 +144,57 @@ export class HeaderComponent implements OnInit {
               domain: this.domain,
               technology: this.technology,
               registration: this.registration,
-              ChangePassword: this.ChangePW,
+              changepassword: this.ChangePW,
+              solist: this.solist,
+              candidatelist: this.candidatelist
             };
             sessionStorage.setItem("toggle", JSON.stringify(obj));
+
           }
+
+
+
+          if (
+            sessionStorage.getItem("toggle") != null ||
+            sessionStorage.getItem("toggle") != undefined
+          ) {
+
+            let obj = sessionStorage.getItem("toggle");
+            let objData = obj ? JSON.parse(obj) : null;
+            console.log(objData);
+            for (let key of Object.keys(objData)) {
+              if (key == "sow") {
+                this.sow = objData.sow;
+              }
+              if (key.toLowerCase() == "candidatedetails") {
+                this.candidatedetails = objData.candidatedetails;
+              }
+              if (key.toLowerCase() == "mapping") {
+                this.mapping = objData.mapping;
+              }
+              if (key.toLowerCase() == "domain") {
+                this.domain = objData.domain;
+              }
+              if (key.toLowerCase() == "technology") {
+                this.technology = objData.technology;
+              }
+              if (key.toLowerCase() == "registration") {
+                this.registration = objData.registration;
+              }
+
+              if (key.toLowerCase() == "changepassword") {
+                this.ChangePW = objData.changepassword;
+              }
+              if (key.toLowerCase() == "solist") {
+                this.solist = objData.solist;
+              }
+              if (key.toLowerCase() == "candidatelist") {
+                this.candidatelist = objData.candidatelist;
+              }
+              console.log(key)
+            }
+          }
+
         }
       }
     });
@@ -158,6 +210,8 @@ export class HeaderComponent implements OnInit {
     this.dashboard = false;
     this.registration = false;
     this.ChangePW = false;
+    this.solist = false;
+    this.candidatelist = false;
   }
 
 
@@ -168,9 +222,12 @@ export class HeaderComponent implements OnInit {
   }
   managePassword1() {
     this.managePw = false;
+    console.log("pw-before", this.managePw1)
     this.managePw1 = !this.managePw1;
-   
-    console.log(this.managePw1);
+
+
+    console.log("pw-after", this.managePw1)
+    console.log(this.ChangePW)
   }
 
   closeMenuBox() {

@@ -35,7 +35,7 @@ import * as XLSX from "xlsx";
 })
 export class SOWComponent implements OnInit {
   file: File;
-  arrayBuffer: any; 
+  arrayBuffer: any;
   filelist: any;
   sowlist: SOModel[] = [];
   SowList: SOModel[] = [];
@@ -71,7 +71,7 @@ export class SOWComponent implements OnInit {
   startDate: string;
   nextInterval: any;
   previousInterval: any;
-
+  downloadData:any=[];
   constructor(
     private service: SOWService,
     private regionService: RegionserviceService,
@@ -87,10 +87,10 @@ export class SOWComponent implements OnInit {
     private excelService: ExcelService,
     private login: LoginService,
     private router: Router
-  ) {}
+  ) { }
 
   async ngOnInit() {
-   
+
     this.isAuthor = JSON.parse(sessionStorage.getItem("author"));
     // await this.GetDropdown1();
     // await this.GetDropdown2();
@@ -482,7 +482,7 @@ export class SOWComponent implements OnInit {
   }
 
   editDetails(data: any) {
-    
+
     this.editmode = true;
     this.Id = data.sowId;
     this.router.navigate(["/soList"], {
@@ -533,8 +533,8 @@ export class SOWComponent implements OnInit {
       } else {
         alert(
           "Mapping Exists for this SO with candidate." +
-            "\n" +
-            "Please unmap and then delete"
+          "\n" +
+          "Please unmap and then delete"
         );
       }
     } else {
@@ -671,11 +671,65 @@ export class SOWComponent implements OnInit {
     this.endDate = new DatePipe("en-US").transform(this.endDate, "yyyy-MM-dd");
     this.service.GetSOByDate(this.fromDate, this.endDate).subscribe((data) => {
       if (data != null || data != undefined) {
+
+        for (var i in data) {
+
+          const keyValuePairs: { [key: string]: string } = {
+
+            soName: data[i].soName,
+
+            jrCode: data[i].jrCode,
+
+            requestCreationDate: data[i].requestCreationDate,
+
+            accountName: data[i].accountName,
+
+            technologyName: data[i].technologyName,
+
+            role: data[i].role,
+
+            region: data[i].region,
+
+            location: data[i].location,
+
+            targetOpenPositions: data[i].targetOpenPositions,
+
+            positionsTobeClosed: data[i].positionsTobeClosed,
+
+            ustpocName: data[i].ustpocName,
+
+            recruiterName: data[i].recruiterName,
+
+            usttpmName: data[i].usttpmName,
+
+            dellManagerName: data[i].dellManagerName,
+
+            statusName: data[i].statusName,
+
+            band: data[i].band,
+
+            projectId: data[i].projectId,
+
+            accountManager: data[i].accountManager,
+
+            externalResource: data[i].externalResource,
+
+            internalResource: data[i].internalResource,
+
+
+
+          };
+
+          this.downloadData.push(keyValuePairs);
+
+        }
+     
+
         console.log(data);
-        this.downloadObject = this.createObject(data);
+        this.downloadObject = this.createObject(this.downloadData);
         let headers = [
           [
-            "SO Id",
+            
             "SO Name",
             "JR Code",
             "Request Creation Date",

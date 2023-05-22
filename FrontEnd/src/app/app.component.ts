@@ -12,6 +12,7 @@ export class AppComponent {
   headerEvent: boolean = true;
   constructor(public router: Router) {}
   update(event: any) {
+    console.log("event",event)
     this.headerEvent = event;
   }
 
