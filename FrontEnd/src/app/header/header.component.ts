@@ -40,18 +40,17 @@ export class HeaderComponent implements OnInit {
     this.loggedIn();
   }
 
-  // @HostListener('window:resize', ['$event'])
-  // resizeHandler(event: any) {
-  //   console.log("Window size check", window.innerWidth >= 768); // Adjust the breakpoint as per your mobile/desktop threshold
-  //   console.log(this.isChecked)
-  //   if(((window.innerWidth >= 768)==false)&&this.isChecked==true)
-  //   {
-  //     this.isChecked=true;
-  //     this.eventChange.emit(false);
+  @HostListener('window:resize', ['$event'])
+  resizeHandler(event: any) {
+    console.log("Window size check", window.innerWidth >= 768); 
+    console.log(this.isChecked)
+    if(((window.innerWidth <= 768)==true)&&this.isChecked==true)
+    {
+     this.MenuClose();
       
-  //   }
+    }
     
-  // }
+  }
   MenuClose() {
     const closeElement: HTMLElement = this.elementRef.nativeElement.querySelector("#navbartoggler");
 
@@ -59,13 +58,7 @@ export class HeaderComponent implements OnInit {
       closeElement.click();
     }
   }
-  // closeNavbarOnClickPage(event: MouseEvent) {
-  //   const closeElement: HTMLElement = this.elementRef.nativeElement.querySelector("#navbartoggler");
-
-  //   if (!closeElement.contains(event.target as Node)) {
-  //     this.MenuClose(); 
-  //   }
-  //}
+  
 
   update() {
     console.log("in update",this.isChecked)
