@@ -1,30 +1,35 @@
 <div class="pos-f-t" *ngIf="header==true">
         <nav class="navbar">
 
-                <button id="navbartoggler" [ngClass]="isChecked?'navbar-toggler_fill':'navbar-toggler_gap'" class="navbar-toggler" (click)="update()" type="button"
-                        data-toggle="collapse" data-target="#navbarToggleExternalContent"
-                        aria-controls="navbarToggleExternalContent" aria-expanded="false"
-                        aria-label="Toggle navigation">
-                        <i [ngClass]="isChecked?'bi bi-grid-3x3-gap-fill':'bi bi-grid-3x3-gap'"  ></i>
-                        
-                </button>
+                <span style="cursor: pointer;" id="navbartoggler" class="navbar-toggler"
+                        class="navbar-toggler" (click)="update()" type="button" data-toggle="collapse"
+                        data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <i [ngClass]="isChecked?'bi bi-x':'bi bi-list'"></i>
+                        <!-- <i class="bi bi-list"></i> -->
+
+                </span>
 
                 <ul class="navbar-nav flex-row">
                         <li class="nav-item text-white"><img src="../../assets/icons/DellUSTSOW.png" id="ustdellacc"
                                         alt="ustdellacc" />
                         </li>
-                        <li class="nav-link" *ngIf="dashboard" routerLink="/dashboard" routerLinkActive="active" id="dashboard">Dashboard
+                        <li class="nav-link" *ngIf="dashboard" routerLink="/dashboard" routerLinkActive="active"
+                                id="dashboard">Dashboard
                         </li>
                         <li class="nav-link" *ngIf="sow" routerLink="/sow" routerLinkActive="active" id="sow">So</li>
-                        <li class="nav-link" *ngIf="candidatedetails" routerLink="/candidatedetails" routerLinkActive="active"
-                                id="candidate">Candidate</li>
-                        <li class="nav-link" *ngIf="mapping" routerLink="/mapping" routerLinkActive="active" id="mapping">Mapping</li>
-                        <li class="nav-link" *ngIf="domain"  routerLink="/domain" routerLinkActive="active" id="domain">Domain</li>
-                        <li class="nav-link" *ngIf="technology" routerLink="/technology" routerLinkActive="active" id="tech">Technology</li>
+                        <li class="nav-link" *ngIf="candidatedetails" routerLink="/candidatedetails"
+                                routerLinkActive="active" id="candidate">Candidate</li>
+                        <li class="nav-link" *ngIf="mapping" routerLink="/mapping" routerLinkActive="active"
+                                id="mapping">Mapping</li>
+                        <li class="nav-link" *ngIf="domain" routerLink="/domain" routerLinkActive="active" id="domain">
+                                Domain</li>
+                        <li class="nav-link" *ngIf="technology" routerLink="/technology" routerLinkActive="active"
+                                id="tech">Technology</li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                        <div  class="menu__item1">
+                        <div class="menu__item1">
                                 <a (click)="managePassword()">
                                         <i class="bi bi-gear" id="set"></i><i class="bi bi-caret-down"></i>
                                 </a>
@@ -41,7 +46,7 @@
                         <div class="account">{{Username}}<i class="bi bi-person-circle p-1"></i>
                         </div>
                         <div *ngIf="login" class="btn btn-dark p-1" id="logOut">
-                                <li  routerLink="active" (click)="logOut()">Logout</li>
+                                <li routerLink="active" (click)="logOut()">Logout</li>
                         </div>
 
                 </ul>
@@ -66,10 +71,10 @@
                                         <i class="bi bi-rocket-takeoff"></i>Technology
                                 </li>
 
-                                <div  class="menu__item3">
+                                <div class="menu__item3">
                                         <a (click)="managePassword1()">
-                                                <i class="bi bi-gear" id="set"></i><a id="usersettings">User Settings</a><i
-                                                        class="bi bi-caret-down"></i>
+                                                <i class="bi bi-gear" id="set"></i><a id="usersettings">User
+                                                        Settings</a><i class="bi bi-caret-down"></i>
                                         </a>
                                         <div class="reg" *ngIf="managePw1==true">
 
@@ -91,10 +96,10 @@
         <div class="smallscreen">
 
                 <ul class="smallscreenmenu">
-                        <li *ngIf="dashboard"  routerLink="/dashboard">
+                        <li *ngIf="dashboard" routerLink="/dashboard">
                                 <i class="bi bi-speedometer2"></i>Dashboard
                         </li>
-                        <li *ngIf="sow"  routerLink="/sow">
+                        <li *ngIf="sow" routerLink="/sow">
                                 <i class="bi bi-card-list"></i>So
                         </li>
                         <li *ngIf="candidatedetails" routerLink="/candidatedetails"><i
@@ -104,8 +109,8 @@
                                 <a (click)="toggleMore()">
                                         <i class="bi bi-three-dots"></i>More
                                 </a>
-                                <div *ngIf="showMoreItems" [ngClass]="isAuthor ? 'showmoremenu' : 'showmoremenu_user'" >
-                                       
+                                <div *ngIf="showMoreItems" [ngClass]="isAuthor ? 'showmoremenu' : 'showmoremenu_user'">
+
                                         <ul>
 
                                                 <li *ngIf="domain" routerLink="/domain">
@@ -120,7 +125,7 @@
                                                 <li *ngIf="ChangePW" routerLink="/changePw">
                                                         <i class="bi bi-key"></i>Change Password
                                                 </li>
-                                                <li *ngIf="login"><a (click)="logOut()" >
+                                                <li *ngIf="login"><a (click)="logOut()">
                                                                 <i class="bi bi-box-arrow-right"></i>Logout</a></li>
                                         </ul>
                                 </div>

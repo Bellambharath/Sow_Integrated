@@ -39,12 +39,24 @@
   #tech {
     padding-left: 5%;
   }
-  .navbar-toggler_gap, .navbar-toggler_fill {
+  /* .navbar-toggler_gap, .navbar-toggler_fill {
     position: absolute;
     top: 0px;
     left: 0px;
     z-index: 10000;
-    padding: 3px;
+    padding: 0px;
+   
+    line-height: 1;
+    margin-top: 8px;
+    margin-left: 5px;
+   
+  } */
+  .navbar-toggler {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 10000;
+    padding: 0px;
     /* font-size: 14px; */
     line-height: 1;
     margin-top: 8px;
@@ -52,10 +64,9 @@
    
   }
 
-
-  .bi-grid-3x3-gap, .bi-grid-3x3-gap-fill{
+  .bi-x,.bi-list{
     color:black !important;
-    font-size: 25px;
+    font-size: 30px;
     padding:0px;
   }
 
@@ -239,7 +250,7 @@
 #navbarToggleExternalContent {
   position: fixed;
   left: 0;
-  top: 8.2vh;
+  top: 7.2vh;
   width: 220px;
   height: 100vh;
   z-index: 999;
