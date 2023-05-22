@@ -42,15 +42,16 @@ export class HeaderComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   resizeHandler(event: any) {
-    console.log("Window size check", window.innerWidth >= 768); 
-    console.log(this.isChecked)
+    
     if(((window.innerWidth <= 768)==true)&&this.isChecked==true)
     {
+      console.log("inside check")
      this.MenuClose();
       
     }
     
   }
+
   MenuClose() {
     const closeElement: HTMLElement = this.elementRef.nativeElement.querySelector("#navbartoggler");
 
@@ -206,16 +207,19 @@ export class HeaderComponent implements OnInit {
     this.solist = false;
     this.candidatelist = false;
   }
-
-
+  CloseManagePassword()
+  {
+    this.managePw=false;
+  }
   managePassword() {
+    console.log("managePassword")
     this.managePw = !this.managePw;
     this.managePw1 = false;
     console.log(this.managePw);
   }
   managePassword1() {
     this.managePw = false;
-    console.log("pw-before", this.managePw1)
+    
     this.managePw1 = !this.managePw1;
 
 
@@ -237,5 +241,9 @@ export class HeaderComponent implements OnInit {
   }
   toggleMore() {
     this.showMoreItems = !this.showMoreItems;
+  }
+  toggleclose()
+  {
+    this.showMoreItems=false;
   }
 }

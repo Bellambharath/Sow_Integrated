@@ -313,7 +313,7 @@ export class CandidateDetailsComponent implements OnInit {
     this.service
       .GetCandidateByDate(this.fromDate, this.endDate)
       .subscribe((data) => {
-        if (data != null || data != undefined) {
+        if (data.length>0) {
           for (var i in data) {
 
             const keyValuePairs: { [key: string]: string } = {

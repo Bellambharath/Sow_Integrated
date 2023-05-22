@@ -225,7 +225,7 @@ export class RegistrationComponent implements OnInit {
     console.log(obj)
     this.service.PostRegistrationData(obj).subscribe((data) => {
       console.log(data)
-      alert("Candidate Added Successfully");
+      alert(data);
       this.regForm.reset();
       this.getLoginData();
     });

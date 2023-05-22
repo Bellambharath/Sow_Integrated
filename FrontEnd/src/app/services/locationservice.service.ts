@@ -16,8 +16,8 @@ export class LocationserviceService {
   }
   GetLocationByRegionId(id:any): Observable<any> {
     let Id:number=parseInt(id);
-    // return this.http.get<any>(`${this.baseUrl}/getbyregion?id=${Id}`);
-    return this.http.get<any>("https://localhost:7187/api/Location/getbyregion?id="+Id);
+    return this.http.get<any>(`${this.baseUrl}/getbyregion?id=`+Id);
+    
   }
 
 

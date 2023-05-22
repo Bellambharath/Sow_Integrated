@@ -39,6 +39,15 @@
   #tech {
     padding-left: 5%;
   }
+
+  .navbar-nav-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+
   /* .navbar-toggler_gap, .navbar-toggler_fill {
     position: absolute;
     top: 0px;
@@ -68,6 +77,10 @@
     color:black !important;
     font-size: 30px;
     padding:0px;
+  }
+
+  .menu i{
+    font-size: 20px;
   }
 
 
@@ -145,6 +158,21 @@
 
   }
 
+  /* .bg-light ul li :hover{
+    color:blueviolet;
+    
+  } */
+
+  .menuitem:hover{
+    color:rgb(18, 84, 183);
+    
+  }
+
+  /* .menuitem :hover{
+    color:rgb(43, 116, 226);
+    background-color: rgba(234, 233, 225, 0.856);
+  } */
+
   .menu {
     padding-top: 10px;
     padding-left: 10px;
@@ -200,8 +228,8 @@
     font-weight: bold;
   }
 
-  .bi.bi-caret-down {
-    padding: 0;
+  .bi-caret-down {
+    margin-top: 3px;
   }
 
   .menu__item1 {
@@ -280,12 +308,12 @@
 
 .nav-link:hover {
   cursor: pointer;
-  color: rgb(16, 113, 232);
+  color:rgb(18, 84, 183);
 
 }
 
 .active {
-  color: rgb(210, 30, 30);
+  color:rgb(18, 84, 183);
 }
 
 
@@ -333,7 +361,7 @@ ul {
   padding-bottom: 10px;
   /* font-size: 14px; */
   line-height: 1.42857;
-  color: #231f20 !important;
+  /* color: #231f20 !important; */
   cursor: pointer;
   caret-color: transparent;
 }
@@ -368,14 +396,20 @@ ul {
   transition-duration: .25s;
   caret-color: transparent;
   padding-bottom: 5px;
-  /* font-size: 14px; */
+  /* font-size: 15px; */
   line-height: 1.42857;
-  color: #231f20 !important;
+  color: #231f20;
   cursor: pointer;
   caret-color: transparent;
   flex-direction: row;
   align-items: center;
   padding: 13px 0px;
+}
+
+
+.menu__item3 :hover{
+  color:rgb(18, 84, 183);
+    
 }
 
 .userblock {
@@ -391,9 +425,9 @@ ul {
   border: 1px solid #231f204d !important;
 }
 
+
 .bi.bi-gear {
   padding-right: 10px;
-  /* font-size: 16px; */
 }
 
 .reg {
@@ -401,18 +435,14 @@ ul {
   padding-left: 20px;
 }
 
-
-
 /* i{
    font-size: 16px; 
 } */
 
 #usersettings {
   padding-left: 0px;
+  font-size: 15px;
 }
-
-
-
 
 @media (max-width: 600px) {
 
@@ -471,7 +501,7 @@ ul {
     padding-top: 1px;
     font-size: 14px;
     line-height: 1.42857;
-    color: #231f20 !important;
+    color: #231f20 ;
     cursor: pointer;
     caret-color: transparent;
     flex-direction: row;

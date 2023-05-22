@@ -4,21 +4,23 @@ import { HeaderComponent } from './header.component';
 import { CommonService } from '../common.service';
 import { BehaviorSubject, of } from 'rxjs';
 import { ElementRef, Renderer2 } from '@angular/core';
+import { Router } from '@angular/router';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
-  let mockCommonService,mockcommondata,mockRenderer2,mockElementRef,mocklocation
+  let mockCommonService,mockcommondata,mockRenderer2,mockElementRef,mocklocation,mockrouter;
   beforeEach(async () => {
      mockCommonService=jasmine.createSpyObj('CommonService',['loadComponent','headerContent'])
      mockElementRef=jasmine.createSpyObj('ElementRef',['nativeElement','querySelector'])
      mockCommonService.HeaderContent = new BehaviorSubject<boolean>(true);
      mockCommonService.loadMessage = new BehaviorSubject<boolean>(true);
+     mockrouter=jasmine.createSpyObj('Router',['navigate'])
      mocklocation=jasmine.createSpyObj('Location',['location','reload'])
     await TestBed.configureTestingModule({
       declarations: [ HeaderComponent ],
       providers:[{provide:CommonService,useValue:mockCommonService},{provide:Renderer2,useValue:mockRenderer2},
-      {provide:ElementRef,useValue:mockElementRef},{provide:Location,useValue:mocklocation}]
+      {provide:ElementRef,useValue:mockElementRef},{provide:Location,useValue:mocklocation},{provide:Router,useValue:mockrouter}]
     })
     .compileComponents();
   

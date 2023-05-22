@@ -670,7 +670,7 @@ export class SOWComponent implements OnInit {
     );
     this.endDate = new DatePipe("en-US").transform(this.endDate, "yyyy-MM-dd");
     this.service.GetSOByDate(this.fromDate, this.endDate).subscribe((data) => {
-      if (data != null || data != undefined) {
+      if (data.length>0) {
 
         for (var i in data) {
 
@@ -725,7 +725,7 @@ export class SOWComponent implements OnInit {
         }
      
 
-        console.log(data);
+       
         this.downloadObject = this.createObject(this.downloadData);
         let headers = [
           [
