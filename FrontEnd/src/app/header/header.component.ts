@@ -78,6 +78,7 @@ export class HeaderComponent implements OnInit {
     //location.reload();
   }
   loggedIn() {
+    
     this.commonServ.HeaderContent.subscribe((data) => {
       if (!data) {
         this.isChecked = false;
@@ -86,6 +87,7 @@ export class HeaderComponent implements OnInit {
     });
     this.commonServ.loadMessage.subscribe((data) => {
       if (data) {
+        
         if (
           sessionStorage.getItem("userData") != null ||
           sessionStorage.getItem("userData") != undefined
@@ -97,6 +99,7 @@ export class HeaderComponent implements OnInit {
           let resData = data ? JSON.parse(data) : null;
 
           let ScreenNames = resData.ScreenNames.split(",");
+          
           console.log(ScreenNames);
 
           if (sessionStorage.getItem("toggle") == null ||

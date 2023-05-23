@@ -45,7 +45,10 @@ export class CandidateDetailsComponent implements OnInit {
   startDate: string;
   nextInterval: any;
   previousInterval: any;
-  downloadData:any=[];
+  downloadData: any = [];
+  isInternal:string;
+
+
   constructor(
     private service: CandidateService,
     private mappingService: CandidatemappingService,
@@ -303,36 +306,83 @@ export class CandidateDetailsComponent implements OnInit {
   //   this.excelService.jsonExportAsExcel(this.downloadObject, "Candidate Details", headers);
   // }
   download() {
+
     // let downloadList:CandidateModel[]=this.CandidateList.filter( x=> this.compareFromDates(x.joiningDate,this.fromDate) && this.compareToDates(x.joiningDate,this.endDate));
+
     this.fromDate = new DatePipe("en-US").transform(
+
       this.fromDate,
+
       "yyyy-MM-dd"
+
     );
+
     this.endDate = new DatePipe("en-US").transform(this.endDate, "yyyy-MM-dd");
-    console.log(this.fromDate + "  " + this.endDate);
+
+    console.log(this.fromDate + "  " + this.endDate);
+
     this.service
+
       .GetCandidateByDate(this.fromDate, this.endDate)
+
       .subscribe((data) => {
-        if (data.length>0) {
+
+        if (data != null || data != undefined) {
+
           for (var i in data) {
+
+            if (data[i].isInternal == true) {
+
+              this.isInternal = "Yes";
+
+            } else {
+
+              this.isInternal = "No";
+
+            }
+
+
+
 
             const keyValuePairs: { [key: string]: string } = {
 
               candidateName: data[i].candidateName,
 
+
+
+
               mobileNo: data[i].mobileNo,
+
+
+
 
               gender: data[i].gender,
 
+
+
+
               dob: data[i].dob,
+
+
+
 
               email: data[i].email,
 
+
+
+
               location: data[i].location,
+
+
+
 
               skills: data[i].skills,
 
+
+
+
               joiningDate: data[i].joiningDate,
+
 
               address: data[i].address,
 
@@ -340,60 +390,62 @@ export class CandidateDetailsComponent implements OnInit {
 
               pincode: data[i].pincode,
 
-              isInternal: data[i].isInternal
-
-
-
-
-
-
-
-
-
+              isInternal: this.isInternal,
             };
 
-
-
-
             this.downloadData.push(keyValuePairs);
-
-
-
-
             console.log(this.downloadData);
-
-
-
-
           }
-
           console.log(data.length);
+
           this.downloadObject = this.createObject(this.downloadData);
+
           let headers = [
+
             [
-              
+
               "Candidate Name",
+
               "Mobile No",
+
               "Gender",
+
               "DOB",
+
               "Email",
+
               "Location",
+
               "Skills",
+
               "Joining Date",
+
               "Address",
+
               "Status",
+
               "Pincode",
+
               "isInternal",
+
             ],
+
           ];
+
           this.excelService.jsonExportAsExcel(
+
             this.downloadObject,
+
             "Candidate Details",
+
             headers
+
           );
-        }
-        else alert("No Records found!");
+
+        } else alert("No Records found!");
+
       });
+
   }
 
   createObject(data) {

@@ -105,8 +105,12 @@ export class LoginComponent implements OnInit {
           console.log(this.userData)
           sessionStorage.setItem("userData", JSON.stringify(this.userData));
           this.loginForm.reset();
-          if (formValue.loginPassword == "Sow@123") {
-            this.router.navigate(["/changePw"]);
+          
+          if (formValue.loginPassword == "Sow@123") 
+          {
+            //debugger
+            console.log(formValue.loginPassword)
+            this.router.navigate(["/ChangePassword"]);
           }
           else {
             this.router.navigate(["/dashboard"]);

@@ -27,7 +27,7 @@ const routes: Routes = [
   {path:'soList',component:SoListComponent,canDeactivate:[CanDeactivateGuardService]},
   {path:'candidateList',component:CandidateListComponent,canDeactivate:[CanDeactivateGuardService]},
   {path:'registration',component:RegistrationComponent,canActivate:[AuthGuard]},
-  {path:'changePw',component:ChangePasswordComponent,canActivate:[AuthGuard]},
+  {path:'ChangePassword',component:ChangePasswordComponent,canActivate:[AuthGuard]},
   {path:'server-down',component:ServerdownComponent}
 ];
 

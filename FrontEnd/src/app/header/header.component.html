@@ -37,7 +37,7 @@
                                         <a (click)="CloseManagePassword()" *ngIf="registration" class="menu__item2" routerLink="/registration">
                                                 Registration
                                         </a>
-                                        <a  (click)="CloseManagePassword()"*ngIf="ChangePW" class="menu__item2" routerLink="/changePw">
+                                        <a  (click)="CloseManagePassword()"*ngIf="ChangePW" class="menu__item2" routerLink="/ChangePassword">
                                                 Change Password
                                         </a>
                                 </div>
@@ -82,7 +82,7 @@
                                                         (click)="MenuClose()">
                                                         <i class="bi bi-pencil-square"></i>Registration
                                                 </a>
-                                                <a *ngIf="ChangePW" class="menu__item2" routerLink="/changePw" routerLinkActive="active"
+                                                <a *ngIf="ChangePW" class="menu__item2" routerLink="/ChangePassword" routerLinkActive="active"
                                                         (click)="MenuClose()">
                                                         <i class="bi bi-key"></i>Change Password
                                                 </a>
@@ -122,7 +122,7 @@
                                                 <li (click)="toggleclose()" *ngIf="registration" routerLink="/registration">
                                                         <i class="bi bi-pencil-square"></i>Registration
                                                 </li>
-                                                <li (click)="toggleclose()" *ngIf="ChangePW" routerLink="/changePw">
+                                                <li (click)="toggleclose()" *ngIf="ChangePW" routerLink="/ChangePassword">
                                                         <i class="bi bi-key"></i>Change Password
                                                 </li>
                                                 <li (click)="toggleclose()" *ngIf="login"><a (click)="logOut()">

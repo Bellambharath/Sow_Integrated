@@ -27,14 +27,14 @@ export class AuthGuard implements CanActivate {
             this.commonServ.loadComponent(true);
             return true;
         }
-        if((this.userInfo.RoleName == 'Admin') && (_route.routeConfig?.path?.toString()==='changePw')){
+        if((this.userInfo.RoleName == 'Admin') && (_route.routeConfig?.path?.toString()==='ChangePassword')){
             this.commonServ.loadComponent(true);
             return true;
         }
         else {
             const screens = this.userInfo.ScreenNames.split(',');
             for (let ele in screens) {
-                if (screens[ele].toLowerCase() === _route.routeConfig?.path?.toString()) {
+                if (screens[ele].toLowerCase() === _route.routeConfig?.path?.toString().toLowerCase()) {
                     this.commonServ.loadComponent(true);
                     return true;
                 }
