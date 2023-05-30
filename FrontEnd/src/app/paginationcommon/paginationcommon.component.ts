@@ -36,6 +36,7 @@ export class PaginationcommonComponent implements OnInit {
   }
 
   OnNextClicked() {
+    
     let startIndex: number = 0;
     let endIndex: number = 0;
     let indexCounter: number = 0;

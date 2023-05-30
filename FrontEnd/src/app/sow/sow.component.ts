@@ -163,6 +163,7 @@ export class SOWComponent implements OnInit {
         this.service.GetAllSowData().subscribe(
           (data) => {
             this.sowlist = data;
+            this.GetSowData();
             console.log("SOW");
             console.log(this.sowlist);
           },

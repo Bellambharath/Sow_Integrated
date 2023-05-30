@@ -106,14 +106,10 @@ export class TechnologyComponent implements OnInit {
     }
 
     if (this.editmode) {
-      if (!this.isDuplicate(true)) {
-        this.onEdit();
-      }
+      this.onEdit();
     }
     else {
-      if (!this.isDuplicate(false)) {
-        this.onAdd();
-      }
+      this.onAdd();
     }
   }
 
@@ -137,9 +133,29 @@ export class TechnologyComponent implements OnInit {
     this.populateDropdowns();
   }
 
+  OnNextClicked() {
+    console.log("on touchpad click,,OnNextClicked")
+    let startIndex: number = 0;
+    let endIndex: number = 0;
+    let indexCounter: number = 0;
+
+    this.currentPage += 1;
+    indexCounter = this.currentPage - 1;
+
+    startIndex = indexCounter * Number(this.pageSizeSelected);
+    endIndex = Number(this.pageSizeSelected) + startIndex;
+
+    this.batchRecord = this.TechData.slice(startIndex, endIndex);
+
+
+  }
   OnNextHeld() {
+    
+    //console.log("on mouse click,,OnNextHeld")
     this.nextInterval = setInterval(() => {
+      
       if (this.currentPage < this.totalPages) {
+        //console.log("In side,OnNextHeld ")
         this.OnNextClicked();
       } else {
         clearInterval(this.nextInterval);
@@ -148,6 +164,7 @@ export class TechnologyComponent implements OnInit {
   }
 
   OnNextReleased() {
+    //console.log("on mouse click,,OnNextReleased")
     clearInterval(this.nextInterval);
   }
 
@@ -210,7 +227,7 @@ export class TechnologyComponent implements OnInit {
       type: 'update'
     };
     this.service.UpdateTechData(this.Id, obj).subscribe(res => {
-      alert('Data updated successfully');
+      alert(res);
       this.techForm.reset();
       this.GetAllTechData();
       this.editmode = false;
@@ -231,7 +248,7 @@ export class TechnologyComponent implements OnInit {
       type: "post",
     };
     this.service.PostTechData(obj).subscribe(data => {
-      alert("Technology Added Successfully");
+      alert(data);
       this.techForm.reset();
       this.GetAllTechData();
     })
@@ -262,22 +279,21 @@ export class TechnologyComponent implements OnInit {
     }
   }
 
-  // deleteDetails(tech:any){
-  //   this.Id=tech.technologyId;
-  //   var decision=confirm('Are you sure you want to delete?');
-  //   if(decision){
-  //     this.service.DeleteTechData(tech.technologyId).subscribe(res=>{
-  //       alert('Technology with TechnologyId '+this.Id+ 'Deleted Successfully');
-  //       this.GetAllTechData();
-  //       this.Id=null;
-  //     },err=>{
-  //       alert(err);
-  //     })
-  //   }
-  //  else{
-  //   alert('Technology with TechnologyId ' +this.Id+ ' Not Deleted')
-  //  }
-  // }
+  deleteDetails(tech:any){
+    var decision=confirm('Are you sure you want to delete?');
+    if(decision){
+      this.service.DeleteTechData(tech.technologyId).subscribe(res=>{
+        alert(res);
+        this.GetAllTechData();
+        this.Id=null;
+      },err=>{
+        alert(err);
+      })
+    }
+   else{
+    alert('Technology  ' +    tech.technologyName    + ' Not Deleted')
+   }
+  }
 
   download() {
     this.downloadObject = this.createObject(this.downloadData)
@@ -319,21 +335,7 @@ export class TechnologyComponent implements OnInit {
     this.batchRecord = this.TechData.slice(startIndex, endIndex);
   }
 
-  OnNextClicked() {
-    let startIndex: number = 0;
-    let endIndex: number = 0;
-    let indexCounter: number = 0;
 
-    this.currentPage += 1;
-    indexCounter = this.currentPage - 1;
-
-    startIndex = indexCounter * Number(this.pageSizeSelected);
-    endIndex = Number(this.pageSizeSelected) + startIndex;
-
-    this.batchRecord = this.TechData.slice(startIndex, endIndex);
-
-
-  }
 
 
 

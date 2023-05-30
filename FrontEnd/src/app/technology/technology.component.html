@@ -6,7 +6,7 @@
         <div class="form-group row">
             <div class="col-12 col-md-4 mb-3">
                 <!-- Button trigger modal -->
-                <button type="button" (click)="UpdateHeader()" class="btn btn-primary btn1" data-toggle="modal"
+                <button type="button" (click)="UpdateHeader()" class="btn btn-success btn1" data-toggle="modal"
                     data-target="#mappingModal">
                     Add
                 </button>
@@ -39,8 +39,7 @@
                             <td class="tableborder" *ngIf="isAuthor">
                                 <i class="bi bi-pencil-square" data-toggle="modal" data-target="#mappingModal"
                                     (click)="editDetails(tech)" title="Edit"></i>
-                                <!-- <button (click)="editDetails(tech)"><img src="../../assets/icons/edit.ico"
-                                    class="icons"></button> &nbsp; -->
+                                     <i class="bi bi-trash pl-3" (click)="deleteDetails(tech)" title="Delete"></i>
                             </td>
                         </tr>
                     </tbody>

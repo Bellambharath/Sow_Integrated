@@ -54,7 +54,7 @@ namespace CandidateSoW.Controllers
             }
         }
         [HttpPut("{EmailId}")]
-        public void Put(string EmailId, LoginModel lm)
+        public string Put(string EmailId, LoginModel lm)
         {
             string dbConn = configuration.GetSection("ConnectionStrings").GetSection("DbConnection").Value;
             Db dop = new Db(dbConn);
@@ -67,6 +67,7 @@ namespace CandidateSoW.Controllers
             {
                 msg = ex.Message;
             }
+            return msg;
         }
 
     }

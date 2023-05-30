@@ -9,7 +9,7 @@
     <div class="form-group row">
         <div class="col-12 col-md-4 mb-3">
             <!-- Button trigger modal -->
-        <button type="button" (click)="UpdateHeader()" class="btn btn-primary btn1" data-toggle="modal" data-target="#mappingModal">
+        <button type="button" (click)="UpdateHeader()" class="btn btn-success btn1" data-toggle="modal" data-target="#mappingModal">
              Add
     </button>
         </div>
@@ -39,7 +39,7 @@
                         <td class="tableborder">{{domain.domainName}}</td>
                         <td class="tableborder" *ngIf="isAuthor">
                             <i class="bi bi-pencil-square"  data-toggle="modal" data-target="#mappingModal" (click)=" editDetails(domain)" title="Edit"></i>
-                           
+                            <i class="bi bi-trash pl-3" (click)="deleteDetails(domain)" title="Delete"></i>
                         </td>
                     </tr>
                 </tbody>
@@ -96,6 +96,7 @@
                                 placeholder="Enter Domain Name" required>
                             <div *ngIf="(f.domainName.touched) && f.domainName.invalid" class="text-danger">
                                 <div class="errorClass" *ngIf="f.domainName.errors.required">*Domain Name is required</div>
+                                <div class="errorClass" *ngIf="f.domainName.errors.pattern">*Domain name accepts only &.+#</div>
                             </div>
                         </div>
                     </div>

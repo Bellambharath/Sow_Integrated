@@ -224,14 +224,12 @@ export class CandidatemappingComponent implements OnInit {
     }
 
     if (this.editmode) {
-      if (!this.isDuplicate(true)) {
+       
         this.onEdit();
-      }
+     
     }
     else {
-      if (!this.isDuplicate(false)) {
-        this.onAdd();
-      }
+      this.onAdd();
     }
   }
 
@@ -277,7 +275,7 @@ export class CandidatemappingComponent implements OnInit {
       type: 'update'
     };
     this.service.UpdateCandidateMappingData(this.Id, obj).subscribe(res => {
-      alert('Data updated successfully');
+      alert(res);
       this.mapppingForm.reset();
       this.GetMappingsData();
       this.editmode = false;
@@ -311,7 +309,7 @@ export class CandidatemappingComponent implements OnInit {
       type: "post",
     };
     this.service.PostCandidateMappingData(obj).subscribe(data => {
-      alert("Candidate Added Successfully");
+      alert(data);
       this.mapppingForm.reset();
       this.GetMappingsData();
     })
@@ -322,7 +320,7 @@ export class CandidatemappingComponent implements OnInit {
     var decision = confirm('Are you sure you want to delete?');
     if (decision) {
       this.service.DeleteCandidateMappingData(map.soW_CandidateId).subscribe(res => {
-        alert('Data Deleted Successfully');
+        alert(res);
         this.GetMappingsData();
         this.Id = null;
       })

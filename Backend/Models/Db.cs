@@ -15,21 +15,21 @@ namespace CandidateSoW.Models
     public class Db
     {
 
-        private string connstr ;
+        private string connstr;
         //private readonly ILogger _logger;
 
         public Db(string dbConn)
         {
             connstr = dbConn;
-            
+
         }
         //public Db(ILogger logger)
         //{
         //    _logger = logger;
         //}
-       
 
-       
+
+
 
 
         public string sowtable(Sow sp)
@@ -63,15 +63,15 @@ namespace CandidateSoW.Models
                 cmd.Parameters.AddWithValue("@InternalResource", sp.InternalResource);
                 cmd.Parameters.AddWithValue("@Type", sp.Type);
                 con.Open();
-                
+
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
                     msg = rdr["status"].ToString();
                 }
-                
+
                 con.Close();
-               
+
 
             }
             catch (Exception ex)
@@ -429,10 +429,12 @@ namespace CandidateSoW.Models
                 cmd.Parameters.AddWithValue("@StatusId", sc.StatusId);
                 cmd.Parameters.AddWithValue("@Type", sc.Type);
                 con.Open();
-                cmd.ExecuteNonQuery();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    msg = rdr["status"].ToString();
+                }
                 con.Close();
-                msg = "success";
-
             }
             catch (Exception ex)
             {
@@ -444,11 +446,9 @@ namespace CandidateSoW.Models
                 {
                     con.Close();
                 }
-
             }
             return JsonConvert.SerializeObject(msg);
         }
-
 
         //get record
         public DataSet SowcandidatetableGet(SoWCandidateModel sc, string msg)
@@ -486,7 +486,7 @@ namespace CandidateSoW.Models
 
             string msg = string.Empty;
             SqlConnection con = new SqlConnection(connstr);
-            try 
+            try
             {
                 SqlCommand cmd = new SqlCommand("Domain_proc", con);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -494,10 +494,12 @@ namespace CandidateSoW.Models
                 cmd.Parameters.AddWithValue("@DomainName", dm.DomainName);
                 cmd.Parameters.AddWithValue("@Type", dm.Type);
                 con.Open();
-                cmd.ExecuteNonQuery();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    msg = rdr["status"].ToString();
+                }
                 con.Close();
-                msg = "success";
-
             }
             catch (Exception ex)
             {
@@ -509,11 +511,9 @@ namespace CandidateSoW.Models
                 {
                     con.Close();
                 }
-
             }
             return JsonConvert.SerializeObject(msg);
         }
-
 
 
         public DataSet Domaintableget(DomainModel dm, string msg)
@@ -558,10 +558,12 @@ namespace CandidateSoW.Models
                 cmd.Parameters.AddWithValue("@DomainId", ts.DomainId);
                 cmd.Parameters.AddWithValue("@Type", ts.Type);
                 con.Open();
-                cmd.ExecuteNonQuery();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    msg = rdr["status"].ToString();
+                }
                 con.Close();
-                msg = "success";
-
             }
             catch (Exception ex)
             {
@@ -573,7 +575,6 @@ namespace CandidateSoW.Models
                 {
                     con.Close();
                 }
-
             }
             return JsonConvert.SerializeObject(msg);
         }
@@ -1092,7 +1093,7 @@ namespace CandidateSoW.Models
                 cmd.Parameters.AddWithValue("@StatusType", st.StatusType);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 da.Fill(ds);
-                msg = "Success";    
+                msg = "Success";
                 return ds;
             }
             catch (Exception ex)
@@ -1270,7 +1271,7 @@ namespace CandidateSoW.Models
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 da.Fill(ds);
                 msg = "Success";
-                
+
                 return ds;
             }
             catch (Exception ex)
@@ -1279,7 +1280,7 @@ namespace CandidateSoW.Models
             }
             return ds;
         }
-        public string updateLoginTable(string EmailId,  LoginModel lm)
+        public string updateLoginTable(string EmailId, LoginModel lm)
         {
             using (SqlConnection conn = new SqlConnection(connstr))
             {
@@ -1289,12 +1290,15 @@ namespace CandidateSoW.Models
                     SqlCommand cmd = new SqlCommand("editlogin", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@EmailId", EmailId);
-                   
+
                     cmd.Parameters.AddWithValue("@FailureAttempts", lm.FailureAttempts);
                     conn.Open();
-                    cmd.ExecuteNonQuery();
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        msg = rdr["status"].ToString();
+                    }
                     conn.Close();
-                    msg = "Success";
                 }
                 catch (Exception ex)
                 {
@@ -1307,7 +1311,7 @@ namespace CandidateSoW.Models
                         conn.Close();
                     }
                 }
-                return msg;
+                return JsonConvert.SerializeObject(msg);
             }
         }
 
@@ -1317,7 +1321,7 @@ namespace CandidateSoW.Models
         public DataSet DashboardStatsget(string period)
         {
             string msg = string.Empty;
-            SqlConnection con = new SqlConnection(connstr); 
+            SqlConnection con = new SqlConnection(connstr);
             DataSet ds = new DataSet();
             try
             {
@@ -1410,9 +1414,12 @@ namespace CandidateSoW.Models
                 //cmd.Parameters.AddWithValue("@IsLock", rc.IsLock);
 
                 con.Open();
-                cmd.ExecuteNonQuery();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    msg = rdr["status"].ToString();
+                }
                 con.Close();
-                msg = "success";
             }
             catch (Exception ex)
             {
@@ -1476,9 +1483,12 @@ namespace CandidateSoW.Models
                 cmd.Parameters.AddWithValue("@Type", rc.Type);
                 cmd.Parameters.AddWithValue("@FailureAttempts", rc.FailureAttempts);
                 con.Open();
-                cmd.ExecuteNonQuery();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    msg = rdr["status"].ToString();
+                }
                 con.Close();
-                msg = "success";
             }
             catch (Exception ex)
             {
@@ -1510,10 +1520,12 @@ namespace CandidateSoW.Models
                 cmd.Parameters.AddWithValue("@Type", rc.Type);
                 cmd.Parameters.AddWithValue("@FailureAttempts", rc.FailureAttempts);
                 con.Open();
-                cmd.ExecuteNonQuery();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    msg = rdr["status"].ToString();
+                }
                 con.Close();
-                msg = "success";
-
             }
             catch (Exception ex)
             {
@@ -1525,7 +1537,6 @@ namespace CandidateSoW.Models
                 {
                     con.Close();
                 }
-
             }
             return JsonConvert.SerializeObject(msg);
         }
@@ -1662,6 +1673,134 @@ namespace CandidateSoW.Models
             }
             return lstmain;
         }
+
+
+        public DataSet GetSecurityQuestions(SecurityQuestionModel st, string msg)
+        {
+            msg = string.Empty;
+
+            SqlConnection con = new SqlConnection(connstr);
+
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("SecurityQues_proc", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@QuestionId", st.QuestionId);
+                cmd.Parameters.AddWithValue("@Question", st.Question);
+                cmd.Parameters.AddWithValue("@Type", st.Type);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(ds);
+                msg = "Success";
+                return ds;
+
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+            }
+
+            return ds;
+        }
+
+        public string SecurityAnswertable(SecurityAnswerModel st)
+        {
+            string msg = string.Empty;
+            SqlConnection con = new SqlConnection(connstr);
+            try
+            {
+                SqlCommand cmd = new SqlCommand("SecurityAns_proc", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@AnswerId", st.AnswerId);
+                cmd.Parameters.AddWithValue("@LoginId", st.LoginId);
+                cmd.Parameters.AddWithValue("@QuestionId", st.QuestionId);
+                cmd.Parameters.AddWithValue("@Answer", st.Answer);
+                cmd.Parameters.AddWithValue("@Type", st.Type);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+                msg = "success";
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+                {
+                    con.Close();
+                }
+            }
+            return JsonConvert.SerializeObject(msg);
+        }
+
+        public string ValidateSecurityQnA(string LoginName, int QuestionId, string Answer)
+        {
+            string msg = string.Empty;
+            SqlConnection con = new SqlConnection(connstr);
+            try
+            {
+                SqlCommand cmd = new SqlCommand("ValidateSecuityQnA_proc", con);
+
+                SqlParameter outputParam = new SqlParameter("@msg", SqlDbType.VarChar, 100)
+                {
+                    Direction = ParameterDirection.Output
+                };
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@LoginName", LoginName);
+                cmd.Parameters.AddWithValue("@QuestionId", QuestionId);
+                cmd.Parameters.AddWithValue("@Answer", Answer);
+                cmd.Parameters.Add(outputParam);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                msg = cmd.Parameters["@msg"].Value.ToString();
+                con.Close();
+                //msg = "success";
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+                {
+                    con.Close();
+                }
+            }
+            return JsonConvert.SerializeObject(msg);
+        }
+        public DataSet GetSecurityAnswers(SecurityAnswerModel st, string msg)
+        {
+            msg = string.Empty;
+
+            SqlConnection con = new SqlConnection(connstr);
+
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlCommand cmd = new SqlCommand("SecurityAns_proc", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@AnswerId", st.AnswerId);
+                cmd.Parameters.AddWithValue("@LoginId", st.LoginId);
+                cmd.Parameters.AddWithValue("@QuestionId", st.QuestionId);
+                cmd.Parameters.AddWithValue("@Answer", st.Answer);
+                cmd.Parameters.AddWithValue("@Type", st.Type);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(ds);
+                msg = "Success";
+                return ds;
+
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+            }
+
+            return ds;
+        }
+
 
 
 

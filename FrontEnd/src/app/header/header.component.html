@@ -17,7 +17,7 @@
                         <li class="nav-link" *ngIf="dashboard" routerLink="/dashboard" routerLinkActive="active"
                                 id="dashboard">Dashboard
                         </li>
-                        <li class="nav-link" *ngIf="sow" routerLink="/sow" routerLinkActive="active" id="sow">So</li>
+                        <li class="nav-link" *ngIf="sow" routerLink="/sow" routerLinkActive="active" id="sow">SOW</li>
                         <li class="nav-link" *ngIf="candidatedetails" routerLink="/candidatedetails"
                                 routerLinkActive="active" id="candidate">Candidate</li>
                         <li class="nav-link" *ngIf="mapping" routerLink="/mapping" routerLinkActive="active"
@@ -30,9 +30,9 @@
 
                 <ul class="nav navbar-nav navbar-right">
                         <div class="menu__item1">
-                                <a (click)="managePassword()">
-                                        <i class="bi bi-gear" id="set"></i><i class="bi bi-caret-down"></i>
-                                </a>
+                                <div class="account" (click)="managePassword()">{{Username}}<i class="bi bi-person-fill p-1"></i>
+                                </div>
+                                
                                 <div *ngIf="managePw==true" class="userblock">
                                         <a (click)="CloseManagePassword()" *ngIf="registration" class="menu__item2" routerLink="/registration">
                                                 Registration
@@ -42,9 +42,8 @@
                                         </a>
                                 </div>
                         </div>
-
-                        <div class="account">{{Username}}<i class="bi bi-person-circle p-1"></i>
-                        </div>
+                        
+                        
                         <div *ngIf="login" class="btn btn-dark p-1" id="logOut">
                                 <li routerLink="active" (click)="logOut()">Logout</li>
                         </div>
@@ -59,7 +58,7 @@
                                         <i class="bi bi-display-fill"></i>Dashboard
                                 </li>
                                 <li class="menuitem" *ngIf="sow" routerLink="/sow" routerLinkActive="active" (click)="MenuClose()">
-                                        <i class="bi bi-card-list"></i>So
+                                        <i class="bi bi-card-list"></i>SOW
                                 </li>
                                 <li class="menuitem" *ngIf="candidatedetails" routerLink="/candidatedetails" routerLinkActive="active"
                                         (click)="MenuClose()"><i class="bi bi-person-lines-fill"></i>Candidate</li>
@@ -74,7 +73,7 @@
                                 <div class="menu__item3">
                                         <a (click)="managePassword1()">
                                                 <i class="bi bi-gear-fill" id="set"></i><a id="usersettings">User
-                                                        Settings</a><i class="bi bi-caret-down"></i>
+                                                        Settings <i class="bi bi-caret-down"></i></a>
                                         </a>
                                         <div class="reg" *ngIf="managePw1==true">
 
@@ -100,7 +99,7 @@
                                 <i class="bi bi-speedometer2"></i>Dashboard
                         </li>
                         <li (click)="toggleclose()" *ngIf="sow" routerLink="/sow">
-                                <i class="bi bi-card-list"></i>So
+                                <i class="bi bi-card-list"></i>SOW
                         </li>
                         <li (click)="toggleclose()" *ngIf="candidatedetails" routerLink="/candidatedetails"><i
                                         class="bi bi-person-lines-fill"></i>Candidate</li>

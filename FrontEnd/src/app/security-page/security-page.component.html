@@ -1,0 +1,41 @@
+<div class="result-loader" *ngIf="resultloader">
+    <div class="loading-image"></div>
+</div>
+<div class="container" style="margin-top:20px">
+    <h2>Security Page</h2>
+    <div class="container">
+        <form [formGroup]="SecurityForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-25">
+                    <label for="question">Question:</label>
+                </div>
+                <div class="col-75">
+                    <select id="question" name="question" formControlName="question">
+                        <option disabled>Select a Question:</option>
+                        <option *ngFor="let ques of questions" value="{{ques.questionId}}">
+                            {{ques.question}}</option>
+                    </select>
+                    <div *ngIf="(f.question.touched || submitted) && f.question.invalid" class="text-danger">
+                        <div *ngIf="f.question.errors.required">*Question is required.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="answer">Answer: </label>
+                </div>
+                <div class="col-75">
+                    <input type="text" name="answer" id="answer" formControlName="answer" placeholder="Enter Answer here!"
+                        style="height:40px" required>
+                    <div *ngIf="(f.answer.touched || submitted) && f.answer.invalid" class="text-danger">
+                        <div *ngIf="f.answer.errors.required">*Answer is required.</div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

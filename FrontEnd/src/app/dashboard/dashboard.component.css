@@ -72,7 +72,7 @@ label{
   flex-basis: calc(33.33% - 20px);
   margin: 10px;
 }
-.card-content:hover{
+.list-group-item:hover{
 background-color: #cccccc4d;
 }
 

@@ -39,6 +39,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ServerdownComponent } from './serverdown/serverdown.component';
 import { PaginationcommonComponent } from './paginationcommon/paginationcommon.component';
+import { SecurityPageComponent } from './security-page/security-page.component';
 
 
 
@@ -59,6 +60,7 @@ import { PaginationcommonComponent } from './paginationcommon/paginationcommon.c
     ChangePasswordComponent,
     ServerdownComponent,
     PaginationcommonComponent,
+    SecurityPageComponent,
 
   ],
   imports: [

@@ -56,7 +56,7 @@ export class DomainComponent implements OnInit {
   get f() { return this.domainForm.controls; }
 
   domainForm = new FormGroup({
-    domainName: new FormControl('', [Validators.required])
+    domainName: new FormControl('', [Validators.required,Validators.pattern(/^[A-Za-z,&.+# ]+$/)])
   })
 
   GetAllDomainData() {
@@ -82,14 +82,10 @@ export class DomainComponent implements OnInit {
     }
 
     if (this.editmode) {
-      if (!this.isDuplicate(true)) {
-        this.onEdit();
-      }
+      this.onEdit();
     }
     else {
-      if (!this.isDuplicate(false)) {
-        this.onAdd();
-      }
+      this.onAdd();
     }
   }
 
@@ -132,7 +128,7 @@ export class DomainComponent implements OnInit {
       type: 'update'
     };
     this.service.UpdateDomainData(this.Id, obj).subscribe(res => {
-      alert('Data updated successfully');
+      alert(res);
       this.domainForm.reset();
       this.GetAllDomainData();
       this.callClose();
@@ -157,7 +153,7 @@ export class DomainComponent implements OnInit {
       type: "post",
     };
     this.service.PostDomainData(obj).subscribe(data => {
-      alert("Domain Added Successfully");
+      alert(data);
       this.domainForm.reset();
       this.GetAllDomainData();
     })
@@ -194,20 +190,20 @@ export class DomainComponent implements OnInit {
     })
   }
 
-  // deleteDetails(domain:any){
-  //   this.Id=domain.domainId;
-  //   var decision=confirm('Are you sure you want to delete?');
-  //   if(decision){
-  //     this.service.DeleteDomainData(domain.domainId).subscribe(res=>{
-  //       alert('Domain with domainId '+this.Id+ 'Deleted Successfully');
-  //       this.GetAllDomainData();
-  //       this.Id=null;
-  //     })
-  //   }
-  //  else{
-  //   alert('Domain with domainId ' +this.Id+ ' Not Deleted')
-  //  }
-  //}
+  deleteDetails(domain:any){
+    this.Id=domain.domainId;
+    var decision=confirm('Are you sure you want to delete?');
+    if(decision){
+      this.service.DeleteDomainData(domain.domainId).subscribe(res=>{
+        alert(res);
+        this.GetAllDomainData();
+        this.Id=null;
+      })
+    }
+   else{
+    alert('Domain - ' +domain.domainName+ ' Not Deleted')
+   }
+  }
 
   resetForm() {
     this.domainForm.reset();

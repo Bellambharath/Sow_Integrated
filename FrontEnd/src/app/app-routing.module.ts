@@ -14,6 +14,7 @@ import { SoListComponent } from './so-list/so-list.component';
 import { SOWComponent } from './sow/sow.component';
 import { TechnologyComponent } from './technology/technology.component';
 import { ServerdownComponent } from './serverdown/serverdown.component';
+import { SecurityPageComponent } from './security-page/security-page.component';
 
 const routes: Routes = [
   {path:'',redirectTo:'/login',pathMatch:'full'},
@@ -28,7 +29,9 @@ const routes: Routes = [
   {path:'candidateList',component:CandidateListComponent,canDeactivate:[CanDeactivateGuardService]},
   {path:'registration',component:RegistrationComponent,canActivate:[AuthGuard]},
   {path:'ChangePassword',component:ChangePasswordComponent,canActivate:[AuthGuard]},
-  {path:'server-down',component:ServerdownComponent}
+  {path:'server-down',component:ServerdownComponent},
+  {path:'securityPage',component:SecurityPageComponent,canActivate:[AuthGuard]},
+
 ];
 
 @NgModule({

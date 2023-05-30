@@ -79,7 +79,7 @@
     padding:0px;
   }
 
-  .menu i{
+  .menu i,.bi-person-fill{
     font-size: 20px;
   }
 
@@ -402,7 +402,7 @@ ul {
   cursor: pointer;
   caret-color: transparent;
   flex-direction: row;
-  align-items: center;
+  /* align-items: center; */
   padding: 13px 0px;
 }
 
@@ -416,7 +416,7 @@ ul {
   margin-top: 0px;
   position: fixed;
   top: 50px;
-  left: 0;
+  left: 100px;
   transform: translateX(720%);
   width: fit-content;
   /* font-size: 14px; */

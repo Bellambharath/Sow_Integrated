@@ -30,7 +30,7 @@ namespace CandidateSoW.Controllers
             {
                 msg = ex.Message;
             }
-            return JsonConvert.SerializeObject(msg);
+            return msg;
         }
     }
 }

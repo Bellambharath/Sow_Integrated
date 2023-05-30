@@ -4,6 +4,7 @@ import { ExcelService } from "../services/excel.service";
 import { LoginService } from "../services/login.service";
 import { RegistrationService } from "../services/registration.service";
 import { HttpParams } from "@angular/common/http";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-registration",
@@ -32,12 +33,12 @@ export class RegistrationComponent implements OnInit {
   lock: boolean = true;
   nextInterval: any;
   previousInterval: any;
-  downloadData:any=[];
+  downloadData: any = [];
 
   constructor(
     private service: RegistrationService,
     private excelService: ExcelService,
-    private loginService: LoginService
+    private loginService: LoginService, private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -57,45 +58,12 @@ export class RegistrationComponent implements OnInit {
         console.log(result);
         this.loginData = result;
         for (var i in this.loginData) {
-
-
-
-
           const keyValuePairs: { [key: string]: string } = {
-
-
-
-
             loginName: result[i].loginName,
-
-
-
-
             emailId: result[i].emailId,
-
-
-
-
             roleName: result[i].roleName,
-
-
-
-
           };
-
-
-
-
           this.downloadData.push(keyValuePairs);
-
-
-
-
-          console.log(this.downloadData);
-
-
-
-
         }
         this.rowCount = this.loginData.length;
         this.resultloader = false;
@@ -125,14 +93,11 @@ export class RegistrationComponent implements OnInit {
     }
 
     if (this.editMode) {
-      if (!this.isDuplicate(true)) {
-        this.onEdit();
-      }
+      this.onEdit();
     }
     else {
-      if (!this.isDuplicate(false)) {
-        this.onAdd();
-      }
+
+      this.onAdd();
     }
   }
   isFieldInvalid(fieldName: string): boolean {
@@ -200,7 +165,7 @@ export class RegistrationComponent implements OnInit {
     console.log(obj);
     this.service.UpdateLoginData(this.id, obj).subscribe(
       (res) => {
-        alert("Data updated successfully");
+        alert(res);
         this.regForm.reset();
         this.getLoginData();
         this.editMode = false;
@@ -247,7 +212,7 @@ export class RegistrationComponent implements OnInit {
     var decision = confirm("Are you sure you want to delete?");
     if (decision) {
       this.service.DeleteLoginData(data.loginId).subscribe((res) => {
-        alert("Data Deleted Successfully");
+        alert(res);
         this.getLoginData();
         this.id = null;
       });
@@ -417,7 +382,7 @@ export class RegistrationComponent implements OnInit {
 
     //let httpParams = new HttpParams().append("loginName",loginName).append("loginPassword",loginPassword);
     this.loginService.PutUserData(loginName, obj).subscribe((result) => {
-      alert("Reset Successfully!");
+      alert(result);
     });
   }
 }
