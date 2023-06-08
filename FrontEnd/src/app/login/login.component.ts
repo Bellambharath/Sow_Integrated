@@ -28,15 +28,10 @@ export class LoginComponent implements OnInit {
   constructor(private service: LoginService, private router: Router, private common: CommonService) { }
 
   ngOnInit(): void {
-    //this.userName = this.getUserName();
-    //this.isAuthor = JSON.parse(sessionStorage.getItem('author'));
-    //this.checkUserisValid()
+    
+    
   }
-  //   getUserName(): any {
-  //     let data = localStorage.getItem('userData');
-  //     let userInfo = (data) ? JSON.parse(data) : null;
-  //     return userInfo.LoginName;
-  // }
+  
 
 
   loginForm = new FormGroup({

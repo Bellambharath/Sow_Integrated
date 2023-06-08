@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit {
   ChangePW: boolean = false;
   Username: string = "";
   isAuthor: boolean = false;
+
   constructor(private commonServ: CommonService, private elementRef: ElementRef,
     private renderer: Renderer2, private router: Router) { }
 
@@ -37,19 +38,21 @@ export class HeaderComponent implements OnInit {
 
     this.isAuthor = JSON.parse(sessionStorage.getItem("author"));
     this.Username = this.getUserName();
+    
+
     this.loggedIn();
   }
+  
 
   @HostListener('window:resize', ['$event'])
   resizeHandler(event: any) {
-    
-    if(((window.innerWidth <= 768)==true)&&this.isChecked==true)
-    {
+
+    if (((window.innerWidth <= 768) == true) && this.isChecked == true) {
       console.log("inside check")
-     this.MenuClose();
-      
+      this.MenuClose();
+
     }
-    
+
   }
 
   MenuClose() {
@@ -59,10 +62,10 @@ export class HeaderComponent implements OnInit {
       closeElement.click();
     }
   }
-  
+
 
   update() {
-    console.log("in update",this.isChecked)
+    console.log("in update", this.isChecked)
     this.isChecked = !this.isChecked;
     this.eventChange.emit(this.isChecked);
     console.log("menu");
@@ -75,10 +78,10 @@ export class HeaderComponent implements OnInit {
 
     console.log(sessionStorage.getItem("toggle"))
     this.router.navigate(['/login'])
-    //location.reload();
+
   }
   loggedIn() {
-    
+
     this.commonServ.HeaderContent.subscribe((data) => {
       if (!data) {
         this.isChecked = false;
@@ -87,7 +90,7 @@ export class HeaderComponent implements OnInit {
     });
     this.commonServ.loadMessage.subscribe((data) => {
       if (data) {
-        
+
         if (
           sessionStorage.getItem("userData") != null ||
           sessionStorage.getItem("userData") != undefined
@@ -99,9 +102,8 @@ export class HeaderComponent implements OnInit {
           let resData = data ? JSON.parse(data) : null;
 
           let ScreenNames = resData.ScreenNames.split(",");
-          
-          console.log(ScreenNames);
 
+          console.log(ScreenNames);
           if (sessionStorage.getItem("toggle") == null ||
             sessionStorage.getItem("toggle") == undefined) {
 
@@ -127,70 +129,10 @@ export class HeaderComponent implements OnInit {
               else if (ScreenNames[i].toLowerCase() == "changepassword") {
                 this.ChangePW = true;
               }
-              else if (ScreenNames[i].toLowerCase() == "solist") {
-                this.solist = true;
-              }
-              else if (ScreenNames[i].toLowerCase() == "candidatelist") {
-                this.candidatelist = true;
-              }
             }
-            let obj = {
-              sow: this.sow,
-              candidatedetails: this.candidatedetails,
-              mapping: this.mapping,
-              domain: this.domain,
-              technology: this.technology,
-              registration: this.registration,
-              changepassword: this.ChangePW,
-              solist: this.solist,
-              candidatelist: this.candidatelist
-            };
-            sessionStorage.setItem("toggle", JSON.stringify(obj));
 
           }
 
-
-
-          if (
-            sessionStorage.getItem("toggle") != null ||
-            sessionStorage.getItem("toggle") != undefined
-          ) {
-
-            let obj = sessionStorage.getItem("toggle");
-            let objData = obj ? JSON.parse(obj) : null;
-            console.log(objData);
-            for (let key of Object.keys(objData)) {
-              if (key == "sow") {
-                this.sow = objData.sow;
-              }
-              if (key.toLowerCase() == "candidatedetails") {
-                this.candidatedetails = objData.candidatedetails;
-              }
-              if (key.toLowerCase() == "mapping") {
-                this.mapping = objData.mapping;
-              }
-              if (key.toLowerCase() == "domain") {
-                this.domain = objData.domain;
-              }
-              if (key.toLowerCase() == "technology") {
-                this.technology = objData.technology;
-              }
-              if (key.toLowerCase() == "registration") {
-                this.registration = objData.registration;
-              }
-
-              if (key.toLowerCase() == "changepassword") {
-                this.ChangePW = objData.changepassword;
-              }
-              if (key.toLowerCase() == "solist") {
-                this.solist = objData.solist;
-              }
-              if (key.toLowerCase() == "candidatelist") {
-                this.candidatelist = objData.candidatelist;
-              }
-              console.log(key)
-            }
-          }
 
         }
       }
@@ -210,9 +152,8 @@ export class HeaderComponent implements OnInit {
     this.solist = false;
     this.candidatelist = false;
   }
-  CloseManagePassword()
-  {
-    this.managePw=false;
+  CloseManagePassword() {
+    this.managePw = false;
   }
   managePassword() {
     console.log("managePassword")
@@ -222,7 +163,7 @@ export class HeaderComponent implements OnInit {
   }
   managePassword1() {
     this.managePw = false;
-    
+
     this.managePw1 = !this.managePw1;
 
 
@@ -245,8 +186,7 @@ export class HeaderComponent implements OnInit {
   toggleMore() {
     this.showMoreItems = !this.showMoreItems;
   }
-  toggleclose()
-  {
-    this.showMoreItems=false;
+  toggleclose() {
+    this.showMoreItems = false;
   }
 }

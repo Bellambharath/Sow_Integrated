@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
   regions: any;
   selectperiod: string;
   location: any;
+  isrecruiter: boolean = false;
 
   constructor(private service: DashboardService) { }
 
@@ -28,7 +29,27 @@ export class DashboardComponent implements OnInit {
     this.Username = this.getUserName();
     this.getSODashboardData();
     this.activeTab = 'SO';
+    this.isrecruiter=this.getrole();
   } 
+
+  getrole() {
+    
+    let data = sessionStorage.getItem("userData");
+    let userInfo = data ? JSON.parse(data) : null;
+    let name = userInfo.RoleName;
+
+    if (name === "Recruiter") 
+    {
+      
+      this.activeTab='Candidates';
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+    
+  }
 
   getSODashboardData() {
     this.service.GetSODashboardData(this.selectedTeam).subscribe(result => {

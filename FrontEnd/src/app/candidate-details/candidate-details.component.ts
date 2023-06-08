@@ -31,7 +31,7 @@ export class CandidateDetailsComponent implements OnInit {
   downloadObject: any;
   totalPages: number = 0;
   currentPage: number = 1;
-  pageSizeSelected: number = 10;
+  pageSizeSelected: number = 7;
   batchRecord: any = [];
   resultloader: boolean = false;
   isAuthor: boolean = false;

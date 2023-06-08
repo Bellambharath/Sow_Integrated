@@ -17,7 +17,7 @@ export class DomainComponent implements OnInit {
   Id: any = null;
   downloadObject: any;
   DomainData: any = [];
-  pageSizeSelected: number = 10;
+  pageSizeSelected: number = 7;
   currentPage: number = 1;
   batchRecord: any = [];
   totalPages: number = 0;

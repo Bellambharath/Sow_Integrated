@@ -30,7 +30,7 @@ export class CandidatemappingComponent implements OnInit {
   downloadObject: any;
   currentPage: number = 1;
   totalPages: number = 0;
-  pageSizeSelected: number = 10;
+  pageSizeSelected: number = 7;
   batchRecord: any = [];
   resultloader: boolean = false;
   SOData: SOModel[] = [];

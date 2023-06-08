@@ -21,7 +21,7 @@ export class TechnologyComponent implements OnInit {
   TechData: any = [];
   downloadObject: any;
   batchRecord: any = [];
-  pageSizeSelected: number = 10;
+  pageSizeSelected: number = 7;
   currentPage: number = 1;
   totalPages: number = 0;
   isAuthor: boolean = false;

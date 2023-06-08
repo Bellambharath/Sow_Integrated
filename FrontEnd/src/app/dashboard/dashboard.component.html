@@ -5,10 +5,10 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <ul class="nav nav-tabs" style="color:rgba(20, 5, 5, 0.61)">
+                            <ul  class="nav nav-tabs" style="color:rgba(20, 5, 5, 0.61)">
                                 <li class="nav-item">
-                                    <a class="nav-link" [class.active]="activeTab == 'SO'"
-                                        (click)="onTabClick('SO')"><b>SO</b></a>
+                                    <a *ngIf="isrecruiter==false" class="nav-link" [class.active]="activeTab == 'SO'"
+                                        (click)="onTabClick('SO')"><b>SOW</b></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" [class.active]="activeTab == 'Candidates'"
@@ -30,7 +30,7 @@
                                     <div class="cards_wrap ">
                                         <div class="card_item">
                                             <div class="card-header">
-                                                <small class="text">So Status</small>
+                                                <small class="text">SOW Status</small>
                                             </div>
                                             <div class="card_inner alt">
                                                 <ul *ngFor="let status of statuses;let i = index"

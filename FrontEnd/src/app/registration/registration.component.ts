@@ -373,12 +373,13 @@ export class RegistrationComponent implements OnInit {
   lockAccount() {
     this.lock = false;
   }
-  resetAccount() {
+  resetAccount(email:string) {
     console.log("reset");
     let obj = {
       FailureAttempts: 0,
     };
-    var loginName = sessionStorage.getItem("email");
+    
+    var loginName = email;
 
     //let httpParams = new HttpParams().append("loginName",loginName).append("loginPassword",loginPassword);
     this.loginService.PutUserData(loginName, obj).subscribe((result) => {

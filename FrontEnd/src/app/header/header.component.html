@@ -19,7 +19,7 @@
                         </li>
                         <li class="nav-link" *ngIf="sow" routerLink="/sow" routerLinkActive="active" id="sow">SOW</li>
                         <li class="nav-link" *ngIf="candidatedetails" routerLink="/candidatedetails"
-                                routerLinkActive="active" id="candidate">Candidate</li>
+                                routerLinkActive="active" id="candidate">Candidates</li>
                         <li class="nav-link" *ngIf="mapping" routerLink="/mapping" routerLinkActive="active"
                                 id="mapping">Mapping</li>
                         <li class="nav-link" *ngIf="domain" routerLink="/domain" routerLinkActive="active" id="domain">
@@ -30,7 +30,7 @@
 
                 <ul class="nav navbar-nav navbar-right">
                         <div class="menu__item1">
-                                <div class="account" (click)="managePassword()">{{Username}}<i class="bi bi-person-fill p-1"></i>
+                                <div class="account" (click)="managePassword()">{{Username | titlecase}}<i class="bi bi-person-fill p-1"></i>
                                 </div>
                                 
                                 <div *ngIf="managePw==true" class="userblock">
@@ -61,7 +61,7 @@
                                         <i class="bi bi-card-list"></i>SOW
                                 </li>
                                 <li class="menuitem" *ngIf="candidatedetails" routerLink="/candidatedetails" routerLinkActive="active"
-                                        (click)="MenuClose()"><i class="bi bi-person-lines-fill"></i>Candidate</li>
+                                        (click)="MenuClose()"><i class="bi bi-person-lines-fill"></i>Candidates</li>
                                 <li class="menuitem" *ngIf="mapping" routerLink="/mapping" routerLinkActive="active" (click)="MenuClose()"><i
                                                 class="bi bi-diagram-3-fill"></i>Mapping</li>
                                 <li class="menuitem" *ngIf="domain" routerLink="/domain" routerLinkActive="active" (click)="MenuClose()"><i
@@ -102,7 +102,7 @@
                                 <i class="bi bi-card-list"></i>SOW
                         </li>
                         <li (click)="toggleclose()" *ngIf="candidatedetails" routerLink="/candidatedetails"><i
-                                        class="bi bi-person-lines-fill"></i>Candidate</li>
+                                        class="bi bi-person-lines-fill"></i>Candidates</li>
                         <li (click)="toggleclose()" *ngIf="mapping" routerLink="/mapping"><i class="bi bi-diagram-3"></i>Mapping</li>
                         <div>
                                 <a (click)="toggleMore()">

@@ -851,7 +851,7 @@ export class SOWComponent implements OnInit {
 
   SetDefaultPagination() {
     let indexCounter: number = this.currentPage - 1;
-    this.pageSizeSelected = 10;
+    this.pageSizeSelected = 7;
 
     let startIndex: number = indexCounter * Number(this.pageSizeSelected);
     let endIndex: number = Number(this.pageSizeSelected) + startIndex;
